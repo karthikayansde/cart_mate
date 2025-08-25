@@ -1,3 +1,4 @@
+import 'package:cart_mate/services/responsive.dart';
 import 'package:cart_mate/services/shared_pref_manager.dart';
 import 'package:cart_mate/utils/app_colors.dart';
 import 'package:cart_mate/utils/app_strings.dart';
@@ -36,8 +37,8 @@ class MyApp extends StatelessWidget {
         ),
       ),
       // home: const SignupView(),
-      home: isLoggedIn? HomeView(): const LoginView(),
-      // home: HomeView(),
+      // home: isLoggedIn? HomeView(): const LoginView(),
+      home: HomeView(),
       // home: ForgotPasswordView()
       // home: NewPasswordView()
       // home: OtpVerificationView(),

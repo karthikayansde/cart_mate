@@ -43,4 +43,10 @@ class AppStrings {
   static const String requestTimedOut = "Request timed out. Please check your network and try again.";
   static const String alreadyHaveAnAccount = "Already have an account?";
   static const String passwordMatch = "Password and Confirm Password must match";
+  static const String matesList = "Mates' List";
+  static const String myList = "My List";
+  static const String cancel = "Cancel";
+  static const String ok = "Ok";
+  static const String addList = "+ Add List";
+  static const String addItem = "+ Add Item";
 }

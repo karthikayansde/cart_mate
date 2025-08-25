@@ -7,9 +7,14 @@ class AppColors{
   static const Color popupBG = Colors.black54;
   static const Color transparent = Color(0x00000000);
   static const Color red = Colors.red;
+  static const Color green = Colors.green;
   /// app colors
   static const Color yelloLight = Color(0xFFFFF5E9);
   static const Color primary = Color(0xFF006AD9);
-  static const Color primaryLight = Color(0xFFFDB9B9);
+  static const Color primaryLight = Color(0xFFCA4B4B);
+  static const Color bgTabSider = Color(0xFFFEBCBD);
+  static const Color darkPrim = Color(0xFF413247);
+  static const Color listBg = Color(0xFFF8E5FF);
+  static const Color menuBg = Color(0xFFC9FFCB);
   static const Color grey = Colors.grey;
 }
