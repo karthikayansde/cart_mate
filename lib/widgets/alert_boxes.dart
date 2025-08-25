@@ -57,7 +57,7 @@ class AlertBoxes {
       builder: (BuildContext context) => CupertinoAlertDialog(
         title: Align(
             alignment: Alignment.center, child: Text(header)),
-        content: Text(content),
+        content: content == ''? null:Text(content),
         actions: <CupertinoDialogAction>[
           CupertinoDialogAction(
             isDestructiveAction: true,

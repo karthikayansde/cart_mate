@@ -56,8 +56,7 @@ class MenuCard extends StatelessWidget {
           ),
           child: Row(
             children: [
-              image == null || image == ''
-                  ? Container(
+               Container(
                       height: 75,
                       width: 75,
                       child: Padding(
@@ -70,7 +69,13 @@ class MenuCard extends StatelessWidget {
                               ), // Same as container
                             ),
                           ),
-                          child: Image.asset(
+                          child:image == null || image == ''
+                              ? Image.asset(
+                            "assets/images/defaultMenuImage.png",
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: double.infinity,
+                          ): Image.asset(
                             "assets/images/defaultMenuImage.png",
                             fit: BoxFit.cover,
                             width: double.infinity,
@@ -78,11 +83,6 @@ class MenuCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                    )
-                  : Image.asset(
-                      'assets/images/defaultMenuImage.png',
-                      width: 75,
-                      height: 75,
                     ),
               SizedBox(width: 5),
               Column(
@@ -102,6 +102,7 @@ class MenuCard extends StatelessWidget {
               ),
               Spacer(),
               isList? Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Row(
                     children: [

@@ -1,6 +1,9 @@
 import 'package:cart_mate/controllers/home_controller.dart';
 import 'package:cart_mate/utils/app_colors.dart';
 import 'package:cart_mate/utils/app_strings.dart';
+import 'package:cart_mate/views/item_view.dart';
+import 'package:cart_mate/views/menu_list_view.dart';
+import 'package:cart_mate/views/side_drawer_view.dart';
 import 'package:cart_mate/widgets/button_widgets.dart';
 import 'package:cart_mate/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +11,9 @@ import 'package:get/get.dart';
 
 import '../services/responsive.dart';
 import '../widgets/animated_toggle.dart';
+import '../widgets/dropdown_widget.dart';
 import '../widgets/menu_card.dart';
+import 'mates_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -19,6 +24,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   late final HomeController controller;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     // TODO: implement initState
@@ -51,20 +57,25 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: AppColors.white,
         leadingWidth:40,
         leading: InkWell(
           onTap: () {
-
+            _scaffoldKey.currentState?.openDrawer();
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: SizedBox( height: 24, width: 24, child: Image.asset("assets/images/menu.png",)),
           ),
         ),
-        title: Center(child: const Text(AppStrings.appName, style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),)),
+        title: Center(child: Padding(
+          padding: const EdgeInsets.only(right: 30.0),
+          child: const Text(AppStrings.appName, style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
+        )),
       ),
+        drawer: SideDrawerView(),
       body: Obx(
         ()=> Stack(
           children: [
@@ -98,7 +109,7 @@ class _HomeViewState extends State<HomeView> {
                         onTap: (){
                           controller.selectedTabIndex.value = 0;
                         },
-                        child: Container(margin: EdgeInsets.symmetric(vertical: 10), width: double.maxFinite,child: Center(child: Text(AppStrings.myList, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),)),),
+                        child: Container(margin: EdgeInsets.symmetric(vertical: 10), width: double.maxFinite,child: Center(child: Text(AppStrings.myList, style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),)),),
                       ),
                     ),
                     Flexible(
@@ -112,7 +123,7 @@ class _HomeViewState extends State<HomeView> {
                         onTap: (){
                           controller.selectedTabIndex.value = 1;
                         },
-                        child: Container(margin: EdgeInsets.symmetric(vertical: 10),width: double.maxFinite,child: Center(child: Text(AppStrings.matesList, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),)),),
+                        child: Container(margin: EdgeInsets.symmetric(vertical: 10),width: double.maxFinite,child: Center(child: Text(AppStrings.matesList, style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),)),),
                       ),
                     )
                   ],
@@ -129,7 +140,7 @@ class _HomeViewState extends State<HomeView> {
             Positioned(
                 bottom: 20,
                 right: 20,
-                child: Container(
+                child: controller.selectedTabIndex.value == 0? Container(
               padding: EdgeInsets.all(15),
               width: 190,
               decoration: ShapeDecoration(
@@ -148,6 +159,13 @@ class _HomeViewState extends State<HomeView> {
                     elevation: true,
                     color: AppColors.listBg,
                     onPressed: () {
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return MenuListView();
+                        },
+                      );
 
                     },
                     labelColor: AppColors.black,
@@ -158,7 +176,13 @@ class _HomeViewState extends State<HomeView> {
                     elevation: true,
                     color: AppColors.menuBg,
                     onPressed: () {
-
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return ItemView();
+                        },
+                      );
                     },
                     labelColor: AppColors.black,
                     label: AppStrings.addItem,
@@ -166,7 +190,18 @@ class _HomeViewState extends State<HomeView> {
                 ],
               ),
 
-            )),
+            ):
+                BasicButtonWidget(
+                  width: 130,
+                  elevation: true,
+                  color: AppColors.menuBg,
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => MatesView(),));
+                  },
+                  labelColor: AppColors.black,
+                  label: AppStrings.mates,
+                ),
+            ),
             if (controller.isLoading.value)
               Positioned.fill(
                 child: Container(

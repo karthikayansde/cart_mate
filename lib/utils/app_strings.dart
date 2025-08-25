@@ -15,6 +15,11 @@ class AppStrings {
   static const String confirmPassword = "Confirm Password";
   static const String signup = "Sign up";
   static const String name = "Name";
+  static const String units = "Units";
+  static const String tagMate = "Tag a mate";
+  static const String addNote = "Add Note";
+  static const String itemName = "Item name";
+  static const String listName = "List name";
   static const String forgotPasswordTitle = "Forgot Password?";
   static const String forgotPasswordSubtitle =
       "Enter your email to receive a OTP.";
@@ -25,6 +30,9 @@ class AppStrings {
   static const String newPassword = "New Password";
   static const String backToLogin = "Back to Login";
   static const String savePassword = "Save Password";
+  static const String save = "Save";
+  static const String send = "Send";
+  static const String create = "Create";
   static const String otpVerificationTitle = "OTP Verification";
   static const String otpVerificationSubtitle =
       "Enter the 4-digit code sent to your email.";
@@ -47,6 +55,16 @@ class AppStrings {
   static const String myList = "My List";
   static const String cancel = "Cancel";
   static const String ok = "Ok";
+  static const String copy = "Copy";
+  static const String add = "Add";
   static const String addList = "+ Add List";
+  static const String matesCode = "Mates' Code";
+  static const String yourCode = "Your Code";
+  static const String addMate = "+ Add Mate";
   static const String addItem = "+ Add Item";
+  static const String mates = "Mates";
+  static const String helpFeedback = "Help and Feedback";
+  static const String enterYourFeedback = "Enter your feedback";
+  static const String editProfile = "Edit Profile";
+  static const String getYourCode = "Get Your Code";
 }
