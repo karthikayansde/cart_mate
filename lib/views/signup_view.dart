@@ -25,14 +25,17 @@ class SignupView extends StatefulWidget {
 class _SignupViewState extends State<SignupView> {
   final controller = Get.put(SignupController());
 
-  // @override
-  // void dispose() {
-  //   controller.emailController.dispose();
-  //   controller.passwordController.dispose();
-  //   controller.confirmPasswordController.dispose();
-  //   controller.nameController.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller.nameController.text = "";
+    controller.emailController.text = "";
+    controller.passwordController.text = "";
+    controller.confirmPasswordController.text = "";
+    controller.isPasswordHidden.value = true;
+    controller.isConfirmPasswordHidden.value = true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,11 +129,11 @@ class _SignupViewState extends State<SignupView> {
                                     ),
                                     child: controller.isPasswordHidden.value
                                         ? Icon(
-                                            Icons.visibility_off_outlined,
+                                            Icons.visibility_outlined,
                                             size: 18,
                                           )
                                         : Icon(
-                                            Icons.visibility_outlined,
+                                            Icons.visibility_off_outlined,
                                             size: 18,
                                           ),
                                   ),
@@ -165,11 +168,11 @@ class _SignupViewState extends State<SignupView> {
                                     child:
                                         controller.isConfirmPasswordHidden.value
                                         ? Icon(
-                                            Icons.visibility_off_outlined,
+                                            Icons.visibility_outlined,
                                             size: 18,
                                           )
                                         : Icon(
-                                            Icons.visibility_outlined,
+                                            Icons.visibility_off_outlined,
                                             size: 18,
                                           ),
                                   ),

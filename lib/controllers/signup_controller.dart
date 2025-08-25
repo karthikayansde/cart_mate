@@ -7,6 +7,7 @@ import 'package:cart_mate/views/otp_verification_view.dart';
 import 'package:cart_mate/widgets/snack_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../services/shared_pref_manager.dart';
 import '../utils/app_strings.dart';
 
 class SignupController extends GetxController {
@@ -15,19 +16,30 @@ class SignupController extends GetxController {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
   var isPasswordHidden = true.obs;
   var isConfirmPasswordHidden = true.obs;
   var isLoading = false.obs;
   final apiService = ApiService();
 
+  PageRouteBuilder<void> transparentRoute(Widget page) {
+    return PageRouteBuilder(
+      opaque: false,
+      pageBuilder: (context, _, __) => page,
+    );
+  }
+
   // data methods
   Future<void> signupApi(BuildContext context) async {
-    bool isConnected = await NetworkController.checkConnectionShowSnackBar(context);
-    if(!isConnected){
+    isLoading.value = true;
+    bool isConnected = await NetworkController.checkConnectionShowSnackBar(
+      context,
+    );
+    if (!isConnected) {
+      isLoading.value = false;
       return;
     }
-    isLoading.value = true;
     try {
       ApiResponse response = await apiService.request(
         method: ApiMethod.post,
@@ -57,15 +69,106 @@ class SignupController extends GetxController {
 
       if (result) {
         isLoading.value = false;
-        showDialog(context: context, barrierDismissible: false, builder: (context) => OtpVerificationView(),);
+        Navigator.push(
+          context,
+          transparentRoute(
+            OtpVerificationView(
+              verify: (otp, clearOtp) async {
+                bool isConnected = await NetworkController.checkConnectionShowSnackBar(context);
+                if (!isConnected) {
+                  return;
+                }
+
+                try {
+                  ApiResponse response = await apiService.request(
+                    method: ApiMethod.post,
+                    endpoint: Endpoints.verifyOtp,
+                    body: {
+                      "email": emailController.text,
+                      "otp": otp,
+                    },
+                  );
+
+                  bool result = apiService.showApiResponse(
+                    context: context,
+                    response: response,
+                    codes: {
+                      ApiCode.success200: true,
+                      ApiCode.notFound404: true,
+                      ApiCode.error400: true,
+                    },
+                    customMessages: {
+                      ApiCode.success200: true,
+                      ApiCode.notFound404: true,
+                      ApiCode.error400: true,
+                    },
+                  );
+
+                  if (result) {
+
+                    await SharedPrefManager.instance.setBoolAsync(SharedPrefManager.isLoggedIn, true);
+                    await SharedPrefManager.instance.setUserData(
+                      name: response.data['name'],
+                      code: response.data['code'],
+                      id: response.data['_id'],
+                      mail: response.data['email'],
+                    );
+
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomeView()),
+                          (Route<dynamic> route) => false,
+                    );
+                  }else if(response.code == ApiCode.notFound404.index){
+                    Navigator.pop(context);
+                  }else if(response.code == ApiCode.error400.index){
+                    clearOtp();
+                  }
+                } catch (e) {
+                  SnackBarWidget.showError(context);
+                }
+              },
+              resend: ()  async {
+                bool isConnected = await NetworkController.checkConnectionShowSnackBar(context);
+                if (!isConnected) {
+                  return;
+                }
+
+                try {
+                  ApiResponse response = await apiService.request(
+                    method: ApiMethod.post,
+                    endpoint: Endpoints.resendOtp,
+                    body: {
+                      "email": emailController.text
+                    },
+                  );
+
+                  bool result = apiService.showApiResponse(
+                    context: context,
+                    response: response,
+                    codes: {
+                      ApiCode.success200: true,
+                      ApiCode.notFound404: true,
+                    },
+                    customMessages: {
+                      ApiCode.success200: true,
+                      ApiCode.notFound404: true,
+                    },
+                  );
+
+                  if(response.code == ApiCode.notFound404.index){
+                    Navigator.pop(context);
+                  }
+                } catch (e) {
+                  SnackBarWidget.showError(context);
+                }
+              },
+            ),
+          ),
+        );
       }
     } catch (e) {
-      SnackBarWidget.show(
-        context,
-        title: apiErrorConfigDefault.title,
-        message: apiErrorConfigDefault.message,
-        contentType: apiErrorConfigDefault.contentType,
-      );
+      SnackBarWidget.showError(context);
     } finally {
       isLoading.value = false;
     }

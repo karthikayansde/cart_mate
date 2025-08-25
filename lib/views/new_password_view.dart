@@ -1,152 +1,163 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:cart_mate/controllers/new_password_controller.dart';
 import 'package:cart_mate/utils/app_colors.dart';
 import 'package:cart_mate/utils/app_strings.dart';
+import 'package:cart_mate/widgets/background_image_widget.dart';
 import 'package:cart_mate/widgets/button_widgets.dart';
+import 'package:cart_mate/widgets/loading_widget.dart';
+import 'package:cart_mate/widgets/snack_bar_widget.dart';
 import 'package:cart_mate/widgets/text_field_widgets.dart';
 import 'package:flutter/material.dart';
-
-import '../utils/app_images.dart';
+import 'package:get/get.dart';
 import '../widgets/glassmorphic_card_widget.dart';
 
 class NewPasswordView extends StatefulWidget {
-  const NewPasswordView({super.key});
+  final bool fromForgotPassword;
+  const NewPasswordView({super.key, required this.fromForgotPassword, });
 
   @override
   State<NewPasswordView> createState() => _NewPasswordViewState();
 }
 
 class _NewPasswordViewState extends State<NewPasswordView> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _newPasswordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
+  late final NewPasswordController controller;
 
   @override
-  void dispose() {
-    _newPasswordController.dispose();
-    _confirmPasswordController.dispose();
-    super.dispose();
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller = Get.put(NewPasswordController());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          /// Background image
-          SizedBox(
-            height: double.maxFinite,
-            width: double.maxFinite,
-            child: Image.asset(AppImages.bg, fit: BoxFit.cover),
-          ),
-
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: GlassmorphicCardWidget(
-                height: 430,
-                child: Form(
-                  key: _formKey,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 20, right: 20),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            AppStrings.newPasswordTitle, // "Set a New Password"
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          Text(
-                            AppStrings
-                                .newPasswordSubtitle, // "Create a new, strong password for your account."
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          TextFieldWidget(
-                            isBorderNeeded: true,
-                            hasHindOnTop: true,
-                            suffixIcon: InkWell(
-                              onTap: () {
-                                // Implement password visibility toggle if needed
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 10,
-                                  right: 10,
-                                ),
-                                child: Icon(
-                                  Icons.visibility_outlined,
-                                  size: 18,
+      body: Obx(
+        () => Stack(
+          children: [
+            BackgroundImageWidget(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: GlassmorphicCardWidget(
+                    height: 400,
+                    child: Form(
+                      key: controller.formKey,
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 20, right: 20),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                AppStrings.newPasswordTitle,
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
-                            ),
-                            maxLines: 1,
-                            onChanged: (p0) {},
-                            controller: _newPasswordController,
-                            hint: AppStrings.newPassword, // "New Password"
-                          ),
-                          TextFieldWidget(
-                            isBorderNeeded: true,
-                            hasHindOnTop: true,
-                            suffixIcon: InkWell(
-                              onTap: () {
-                                // Implement password visibility toggle if needed
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 10,
-                                  right: 10,
-                                ),
-                                child: Icon(
-                                  Icons.visibility_outlined,
-                                  size: 18,
-                                ),
-                              ),
-                            ),
-                            maxLines: 1,
-                            onChanged: (p0) {},
-                            controller: _confirmPasswordController,
-                            hint: AppStrings
-                                .confirmPassword, // "Confirm Password"
-                          ),
-                          const SizedBox(height: 30),
-
-                          BasicButtonWidget(
-                            onPressed: () {},
-                            label: AppStrings.savePassword,
-                          ),
-                          const SizedBox(height: 15),
-                          Align(
-                            alignment: Alignment.center,
-                            child: InkWell(
-                              onTap: () {
-                                // Navigate back to the login screen
-                              },
-                              child: Text(
-                                AppStrings.backToLogin,
+                              Text(
+                                AppStrings.newPasswordSubtitle,
                                 style: TextStyle(
                                   fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                ).copyWith(color: AppColors.primary),
+                                  fontWeight: FontWeight.w400,
+                                ),
                               ),
-                            ),
+                              const SizedBox(height: 20),
+                              TextFieldWidget(
+                                isBorderNeeded: true,
+                                hasHindOnTop: true,
+                                suffixIcon: InkWell(
+                                  onTap: () {},
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 10,
+                                      right: 10,
+                                    ),
+                                    child: controller.isPasswordHidden.value
+                                        ? Icon(
+                                            Icons.visibility_outlined,
+                                            size: 18,
+                                          )
+                                        : Icon(
+                                            Icons.visibility_off_outlined,
+                                            size: 18,
+                                          ),
+                                  ),
+                                ),
+                                maxLines: 1,
+                                onChanged: (p0) {},
+                                controller: controller.passwordController,
+                                hint: AppStrings.newPassword,
+                              ),
+                              TextFieldWidget(
+                                isBorderNeeded: true,
+                                hasHindOnTop: true,
+                                suffixIcon: InkWell(
+                                  onTap: () {},
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 10,
+                                      right: 10,
+                                    ),
+                                    child:
+                                        controller.isConfirmPasswordHidden.value
+                                        ? Icon(
+                                            Icons.visibility_outlined,
+                                            size: 18,
+                                          )
+                                        : Icon(
+                                            Icons.visibility_off_outlined,
+                                            size: 18,
+                                          ),
+                                  ),
+                                ),
+                                maxLines: 1,
+                                onChanged: (p0) {},
+                                controller:
+                                    controller.confirmPasswordController,
+                                hint: AppStrings.confirmPassword,
+                              ),
+                              const SizedBox(height: 30),
+
+                              BasicButtonWidget(
+                                onPressed: () async {
+                                  if (controller.formKey.currentState!.validate()) {
+                                    if (controller.passwordController.text != controller
+                                            .confirmPasswordController
+                                            .text) {
+                                      SnackBarWidget.show(
+                                        context,
+                                        message: AppStrings.passwordMatch,
+                                        contentType: ContentType.warning,
+                                      );
+                                    } else {
+                                      FocusScope.of(context).unfocus();
+                                      await controller.changePasswordApi(context, widget.fromForgotPassword);
+                                    }
+                                  }
+                                },
+                                label: AppStrings.savePassword,
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+            if (controller.isLoading.value)
+              Positioned.fill(
+                child: Container(
+                  color: AppColors.popupBG,
+                  child: LoadingWidget.loader(),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

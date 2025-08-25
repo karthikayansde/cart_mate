@@ -1,3 +1,4 @@
+import 'package:cart_mate/services/api/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cart_mate/utils/app_colors.dart';
@@ -25,5 +26,14 @@ class SnackBarWidget {
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(snackBar);
+  }
+
+  static void showError(BuildContext context) {
+    show(
+      context,
+      title: apiErrorConfigDefault.title,
+      message: apiErrorConfigDefault.message,
+      contentType: apiErrorConfigDefault.contentType,
+    );
   }
 }

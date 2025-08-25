@@ -27,7 +27,7 @@ class AppStrings {
   static const String savePassword = "Save Password";
   static const String otpVerificationTitle = "OTP Verification";
   static const String otpVerificationSubtitle =
-      "Enter the 6-digit code sent to your email.";
+      "Enter the 4-digit code sent to your email.";
   static const String otpHint = "Enter OTP";
   static const String verifyAndProceed = "Verify and Proceed";
   static const String nameValidator = "Please enter name";

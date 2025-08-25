@@ -1,14 +1,27 @@
+import 'package:cart_mate/services/shared_pref_manager.dart';
 import 'package:cart_mate/utils/app_colors.dart';
 import 'package:cart_mate/utils/app_strings.dart';
+import 'package:cart_mate/views/home_view.dart';
 import 'package:cart_mate/views/login_view.dart';
+import 'package:cart_mate/views/new_password_view.dart';
+import 'package:cart_mate/views/signup_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+
+  // Keeps native splash ON until we remove it manually
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  final bool isLoggedIn = (await SharedPrefManager.instance.getBoolAsync(SharedPrefManager.isLoggedIn))??false;
+  FlutterNativeSplash.remove();
+
+  runApp(MyApp(isLoggedIn: isLoggedIn,));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isLoggedIn;
+  const MyApp({super.key, required this.isLoggedIn});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,7 +36,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       // home: const SignupView(),
-      home: const LoginView(),
+      home: isLoggedIn? HomeView(): const LoginView(),
       // home: HomeView(),
       // home: ForgotPasswordView()
       // home: NewPasswordView()

@@ -3,68 +3,70 @@ import 'package:cart_mate/services/api/api_service.dart';
 import 'package:cart_mate/services/api/endpoints.dart';
 import 'package:cart_mate/services/network_service.dart';
 import 'package:cart_mate/views/home_view.dart';
-import 'package:cart_mate/widgets/loading_widget.dart';
+import 'package:cart_mate/views/otp_verification_view.dart';
 import 'package:cart_mate/widgets/snack_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../services/shared_pref_manager.dart';
 import '../utils/app_strings.dart';
 
-class LoginController extends GetxController {
+class NewPasswordController extends GetxController {
   // data members
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+  TextEditingController();
   var isPasswordHidden = true.obs;
+  var isConfirmPasswordHidden = true.obs;
   var isLoading = false.obs;
   final apiService = ApiService();
 
   // data methods
-  Future<void> loginApi(BuildContext context) async {
+  Future<void> changePasswordApi(BuildContext context, bool fromForgotPassword) async {
     isLoading.value = true;
-    bool isConnected = await NetworkController.checkConnectionShowSnackBar(context);
-    if(!isConnected){
+    bool isConnected = await NetworkController.checkConnectionShowSnackBar(
+      context,
+    );
+    if (!isConnected) {
       isLoading.value = false;
       return;
     }
     try {
+      String id = await SharedPrefManager.instance.getStringAsync(SharedPrefManager.id)??'';
       ApiResponse response = await apiService.request(
         method: ApiMethod.post,
-        endpoint: Endpoints.login,
+        endpoint: Endpoints.changePassword,
         body: {
-          "email": emailController.text,
-          "password": passwordController.text,
+          "_id": id,
+          "password": passwordController.text
         },
       );
+
       bool result = apiService.showApiResponse(
         context: context,
         response: response,
         codes: {
           ApiCode.requestTimeout1: true,
-          ApiCode.unauthorized401: true,
           ApiCode.notFound404: true,
+          ApiCode.success200: true,
         },
         customMessages: {
-          ApiCode.unauthorized401: true,
+          ApiCode.success200: true,
           ApiCode.notFound404: true,
         },
       );
 
-      if(result){
-        await SharedPrefManager.instance.setBoolAsync(SharedPrefManager.isLoggedIn, true);
-        await SharedPrefManager.instance.setUserData(
-          name: response.data['name'],
-          code: response.data['code'],
-          id: response.data['_id'],
-          mail: response.data['email'],
-        );
+      if (result) {
         isLoading.value = false;
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => HomeView()),
-              (Route<dynamic> route) => false,
-        );
+        if(fromForgotPassword){
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomeView()),
+                (Route<dynamic> route) => false,
+          );
+        }else{
+          Navigator.pop(context);
+        }
       }
     } catch (e) {
       SnackBarWidget.showError(context);

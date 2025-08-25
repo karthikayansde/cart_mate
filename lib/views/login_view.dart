@@ -23,9 +23,21 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+
+  late final LoginController controller;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller = Get.put(LoginController());
+    controller.emailController.text = "";
+    controller.passwordController.text = "";
+    controller.isPasswordHidden.value = true;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(LoginController());
     return Scaffold(
       body: Obx(
         ()=> Stack(
@@ -89,10 +101,10 @@ class _LoginViewState extends State<LoginView> {
                                     ),
                                     child: controller.isPasswordHidden.value
                                         ? Icon(
-                                            Icons.visibility_off_outlined,
+                                            Icons.visibility_outlined,
                                             size: 18,
                                           )
-                                        : Icon(Icons.visibility_outlined, size: 18),
+                                        : Icon(Icons.visibility_off_outlined, size: 18),
                                   ),
                                 ),
                                 maxLines: 1,

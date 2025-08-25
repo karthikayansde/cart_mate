@@ -68,7 +68,7 @@ final Map<ApiCode, ApiErrorConfig> apiResponseConfig = {
     contentType: ContentType.success,
   ),
   ApiCode.error400: ApiErrorConfig(
-    title: "Bad Request",
+    title: "Invalid",
     message: "Invalid request. Please check your input and try again.",
     contentType: ContentType.warning,
   ),
@@ -305,7 +305,7 @@ class ApiService {
 
       // debugPrint('API Error - Status: ${response.statusCode}, Body: ${response.body}');
       return ApiResponse(
-        code: response.statusCode,
+        code: ApiCode.error400.index,
         message: message,
         data: decodedBody,
       );
@@ -335,36 +335,31 @@ class ApiService {
 
     for (var entry in codes.entries) {
       if (entry.value) {
-        config = apiResponseConfig[entry.key] ?? apiErrorConfigDefault;
-        String message = customMessages[entry.key] == true ? config.message : config.message;
-        SnackBarWidget.show(
-          context,
-          title: config.title,
-          message: message,
-          contentType: config.contentType,
-        );
-        if (entry.key == ApiCode.success200) {
-          return true;
+        if(response.code == entry.key.index){
+          config = apiResponseConfig[entry.key] ?? apiErrorConfigDefault;
+          String message = customMessages[entry.key] == true ? response.data['message'] : config.message;
+          SnackBarWidget.show(
+            context,
+            title: config.title,
+            message: message,
+            contentType: config.contentType,
+          );
+          if (entry.key == ApiCode.success200) {
+            return true;
+          }
+          return false;
         }
-        return false;
       }
     }
 
-    if (codes[ApiCode.success200] == false) {
+    if (response.code == ApiCode.success200.index) {
       return true;
     }
 
     // Show default snackbar if code is not 200 and not in the map
-    if (!codes.containsKey(ApiCode.values[response.code])) {
-      SnackBarWidget.show(
-        context,
-        title: apiErrorConfigDefault.title,
-        message: apiErrorConfigDefault.message,
-        contentType: apiErrorConfigDefault.contentType,
-      );
-      return false;
-    }
-
+    SnackBarWidget.showError(
+      context,
+    );
     return false;
   }
 }
