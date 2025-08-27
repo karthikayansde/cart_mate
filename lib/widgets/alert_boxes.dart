@@ -10,7 +10,7 @@ class AlertBoxes {
     required String header,
     required String content,
     required VoidCallback onOk,
-    required VoidCallback onCancel,
+    VoidCallback? onCancel, String? okText,
   }) {
     return showCupertinoModalPopup(
       barrierDismissible: false,
@@ -23,7 +23,9 @@ class AlertBoxes {
         content: Text(content),
         actions: <CupertinoDialogAction>[
           CupertinoDialogAction(
-            onPressed: onCancel,
+            onPressed: onCancel??(){
+              Navigator.pop(context);
+            },
             child: Text(
               AppStrings.cancel,
               style: TextStyle(color: AppColors.black),
@@ -34,7 +36,7 @@ class AlertBoxes {
             onPressed:
           onOk,
             child: Text(
-              AppStrings.ok,
+              okText??AppStrings.ok,
               style: TextStyle(
                 color: AppColors.primary,
                 fontWeight: FontWeight.bold,

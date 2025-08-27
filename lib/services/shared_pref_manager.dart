@@ -2,6 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefManager {
   SharedPrefManager._internal();
+
   static SharedPrefManager get instance => _prefManager;
   static final SharedPrefManager _prefManager = SharedPrefManager._internal();
   static const String token = "_Token";
@@ -33,11 +34,24 @@ class SharedPrefManager {
   static const String id = 'id';
   static const String mail = 'mail';
 
-  Future<void> setUserData({required String name, required String code, required String id, required String mail}) async {
+  Future<void> setUserData({
+    required String name,
+    required String code,
+    required String id,
+    required String mail,
+  }) async {
     await setStringAsync(SharedPrefManager.name, name);
     await setStringAsync(SharedPrefManager.code, code);
     await setStringAsync(SharedPrefManager.id, id);
     await setStringAsync(SharedPrefManager.mail, mail);
   }
 
+  Future<void> logout() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove(SharedPrefManager.isLoggedIn);
+    await prefs.remove(SharedPrefManager.name);
+    await prefs.remove(SharedPrefManager.code);
+    await prefs.remove(SharedPrefManager.id);
+    await prefs.remove(SharedPrefManager.mail);
+  }
 }

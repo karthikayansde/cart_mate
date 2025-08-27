@@ -14,6 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
+import '../services/shared_pref_manager.dart';
+
 
 class YourCodeView extends StatefulWidget {
   const YourCodeView({super.key});
@@ -25,10 +27,14 @@ class YourCodeView extends StatefulWidget {
 class _YourCodeViewState extends State<YourCodeView> {
   @override
   void initState() {
-    // TODO: implement initState
+    init();
     super.initState();
   }
-  String code = "KA2R1TH";
+  Future<void> init() async {
+    code = await SharedPrefManager.instance.getStringAsync(SharedPrefManager.code)??'';
+    setState(() {});
+  }
+  String code = '';
   @override
   Widget build(BuildContext context) {
     return Dialog(

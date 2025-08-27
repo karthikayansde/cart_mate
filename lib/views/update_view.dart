@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/update_controller.dart';
+import '../services/shared_pref_manager.dart';
 
 
 class UpdateView extends StatefulWidget {
@@ -27,108 +28,118 @@ class _UpdateViewState extends State<UpdateView> {
     // TODO: implement initState
     super.initState();
     controller = Get.put(UpdateController());
+    init();
+  }
+  Future<void> init() async {
+    controller.nameController.text = await SharedPrefManager.instance.getStringAsync(SharedPrefManager.name)??'';
+    controller.mailController.text = await SharedPrefManager.instance.getStringAsync(SharedPrefManager.mail)??'';
   }
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
-      backgroundColor: Colors.white,
-      child:
-      SizedBox(
-        height: 330,
-        child: Obx(
-              ()=> Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.asset(
-                  "assets/images/animatedBg.png",
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: double.maxFinite,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
+    return Scaffold(
 
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(AppStrings.editProfile, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
-                    Form(
-                      key: controller.formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextFieldWidget(
-                            fillBgColor: true,
-                            bgColor: AppColors.white,
-                            isBorderNeeded: true,
-                            hasHindOnTop: true,
-                            onChanged: (p0) {},
-                            validator: AppValidators.name,
-                            hint: AppStrings.name,
-                            controller: controller.nameController,
-                          ),
-                          TextFieldWidget(
-                            fillBgColor: true,
-                            isReadOnly: true,
-                            bgColor: AppColors.white,
-                            isBorderNeeded: true,
-                            hasHindOnTop: true,
-                            onChanged: (p0) {},
-                            hint: AppStrings.email,
-                            controller: TextEditingController(text: "karythia@gmail.com"),
-                          ),
+      backgroundColor: AppColors.popupBG,
+      body: Center(
+        child: Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          backgroundColor: Colors.white,
+          child:
+          SizedBox(
+            height: 330,
+            child: Obx(
+                  ()=> Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.asset(
+                      "assets/images/animatedBg.png",
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.maxFinite,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
 
-                          SizedBox(height: 20,),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(AppStrings.editProfile, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
+                        Form(
+                          key: controller.formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              BasicButtonWidget(
-                                width: 120,
-                                elevation: true,
-                                color: AppColors.listBg,
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                labelColor: AppColors.black,
-                                label: AppStrings.cancel,
+                              TextFieldWidget(
+                                fillBgColor: true,
+                                bgColor: AppColors.white,
+                                isBorderNeeded: true,
+                                hasHindOnTop: true,
+                                onChanged: (p0) {},
+                                validator: AppValidators.name,
+                                hint: AppStrings.name,
+                                controller: controller.nameController,
                               ),
-                              SizedBox(height: 10,),
-                              BasicButtonWidget(
-                                width: 120,
-                                elevation: true,
-                                color: AppColors.menuBg,
-                                onPressed: () {
-                                  if(controller.formKey.currentState!.validate()){
+                              TextFieldWidget(
+                                fillBgColor: true,
+                                isReadOnly: true,
+                                bgColor: AppColors.white,
+                                isBorderNeeded: true,
+                                hasHindOnTop: true,
+                                onChanged: (p0) {},
+                                hint: AppStrings.email,
+                                controller: controller.mailController,                          ),
 
-                                  }
-                                },
-                                labelColor: AppColors.black,
-                                label: AppStrings.save,
+                              SizedBox(height: 20,),
+
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  BasicButtonWidget(
+                                    width: 120,
+                                    elevation: true,
+                                    color: AppColors.listBg,
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    labelColor: AppColors.black,
+                                    label: AppStrings.cancel,
+                                  ),
+                                  SizedBox(height: 10,),
+                                  BasicButtonWidget(
+                                    width: 120,
+                                    elevation: true,
+                                    color: AppColors.menuBg,
+                                    onPressed: () async {
+                                      if(controller.formKey.currentState!.validate()){
+                                        await controller.updateApi(context);
+                                      }
+                                    },
+                                    labelColor: AppColors.black,
+                                    label: AppStrings.save,
+                                  ),
+                                ],
                               ),
+                              SizedBox(height: 10,)
+
                             ],
                           ),
-                          SizedBox(height: 10,)
-
-                        ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (controller.isLoading.value)
+                    Positioned.fill(
+                      child: Container(
+                          color: AppColors.popupBG,
+                          child: LoadingWidget.loader()
                       ),
                     ),
-                  ],
-                ),
+                ],
               ),
-              if (controller.isLoading.value)
-                Positioned.fill(
-                  child: Container(
-                      color: AppColors.popupBG,
-                      child: LoadingWidget.loader()
-                  ),
-                ),
-            ],
+            ),
           ),
         ),
       ),

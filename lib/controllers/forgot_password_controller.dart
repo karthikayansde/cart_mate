@@ -1,6 +1,7 @@
 import 'package:cart_mate/services/api/api_service.dart';
 import 'package:cart_mate/services/api/endpoints.dart';
 import 'package:cart_mate/services/network_service.dart';
+import 'package:cart_mate/utils/app_routes.dart';
 import 'package:cart_mate/views/home_view.dart';
 import 'package:cart_mate/views/new_password_view.dart';
 import 'package:cart_mate/views/otp_verification_view.dart';
@@ -51,9 +52,8 @@ class ForgotPasswordController extends GetxController {
         isLoading.value = false;
         Navigator.push(
           context,
-            PageRouteBuilder(
-              opaque: false,
-              pageBuilder: (context, _, __) => OtpVerificationView(
+            AppRoutes.transparentRoute(
+              OtpVerificationView(
                 verify: (otp, clearOtp) async {
                   bool isConnected = await NetworkController.checkConnectionShowSnackBar(context);
                   if (!isConnected) {
@@ -90,10 +90,10 @@ class ForgotPasswordController extends GetxController {
 
                       await SharedPrefManager.instance.setBoolAsync(SharedPrefManager.isLoggedIn, true);
                       await SharedPrefManager.instance.setUserData(
-                        name: response.data['name'],
-                        code: response.data['code'],
-                        id: response.data['_id'],
-                        mail: response.data['email'],
+                        name: response.data["userData"]['name'],
+                        code: response.data["userData"]['code'],
+                        id: response.data["userData"]['_id'],
+                        mail: response.data["userData"]['email'],
                       );
 
                       Navigator.pushAndRemoveUntil(

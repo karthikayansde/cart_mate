@@ -39,10 +39,13 @@ class AppStrings {
   static const String otpHint = "Enter OTP";
   static const String verifyAndProceed = "Verify and Proceed";
   static const String nameValidator = "Please enter name";
+  static const String codeValidator = "Please enter code";
   static const String emailEMTValidator = "Please enter email";
   static const String emailValidator = "Please enter a valid email";
   static const String passwordEMTValidator = "Please enter a password";
   static const String passwordValidator = "Password must be at least 6 characters";
+  static const String confirmPasswordEMTValidator = "Please enter a confirm password";
+  static const String confirmPasswordValidator = "Confirm password must be at least 6 characters";
   static const String noInternetConnection = "No Internet Connection";
   static const String noInternetConnectionMsg = "Please check your Wi-Fi or mobile data.";
   static const String somethingWentWrongTitle = "Request Failed";
@@ -57,6 +60,9 @@ class AppStrings {
   static const String ok = "Ok";
   static const String copy = "Copy";
   static const String add = "Add";
+  static const String yes = "Yes";
+  static const String logout = "Logout";
+  static const String logoutDetail = "Are you sure you want to log out?";
   static const String addList = "+ Add List";
   static const String matesCode = "Mates' Code";
   static const String yourCode = "Your Code";
@@ -67,4 +73,6 @@ class AppStrings {
   static const String enterYourFeedback = "Enter your feedback";
   static const String editProfile = "Edit Profile";
   static const String getYourCode = "Get Your Code";
+  static const String deleteAccount = "Delete Account";
+  static const String deleteAccountDetail = "Are you sure you want to delete your account? This action cannot be undone.";
 }

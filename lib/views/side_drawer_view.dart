@@ -1,7 +1,19 @@
+import 'package:cart_mate/services/api/api_service.dart';
 import 'package:cart_mate/utils/app_strings.dart';
 import 'package:cart_mate/views/feedback_view.dart';
+import 'package:cart_mate/views/login_view.dart';
 import 'package:cart_mate/views/update_view.dart';
+import 'package:cart_mate/widgets/alert_boxes.dart';
+import 'package:cart_mate/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
+
+import '../services/api/endpoints.dart';
+import '../services/network_service.dart';
+import '../services/shared_pref_manager.dart';
+import '../utils/app_routes.dart';
+import '../widgets/snack_bar_widget.dart';
+import 'forgot_password_view.dart';
+import 'new_password_view.dart';
 
 class SideDrawerView extends StatelessWidget {
   const SideDrawerView({super.key});
@@ -55,12 +67,9 @@ class SideDrawerView extends StatelessWidget {
             title: const Text(AppStrings.editProfile),
             onTap: () {
               Navigator.pop(context);
-              showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (BuildContext context) {
-                  return UpdateView();
-                },
+              Navigator.push(
+                context,
+                AppRoutes.transparentRoute(UpdateView()),
               );
             },
           ),
@@ -68,25 +77,75 @@ class SideDrawerView extends StatelessWidget {
             leading: const Icon(Icons.lock),
             title: const Text('Change Password'),
             onTap: () {
-              // Handle the action for "Change Password".
               Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NewPasswordView(fromForgotPassword: false,)),
+              );
             },
           ),
           ListTile(
             leading: const Icon(Icons.delete_forever),
-            title: const Text('Delete Account'),
+            title: const Text(AppStrings.deleteAccount),
             onTap: () {
-              // Handle the action for "Delete Account".
-              Navigator.pop(context);
+              AlertBoxes.okCancelDialog(context: context, header: AppStrings.deleteAccount, content: AppStrings.deleteAccountDetail,
+                  onOk: () async {
+                LoadingWidget.showLoader(context);
+                bool isConnected = await NetworkController.checkConnectionShowSnackBar(
+                  context,
+                );
+                if (!isConnected) {
+                  LoadingWidget.closeLoader(context);
+                  return;
+                }
+                try {
+
+                  String id = await SharedPrefManager.instance.getStringAsync(SharedPrefManager.id)??'';
+                  ApiResponse response = await ApiService().request(
+                    method: ApiMethod.delete,
+                    endpoint: Endpoints.delete+id,
+                  );
+
+                  bool result = ApiService().showApiResponse(
+                    context: context,
+                    response: response,
+                    codes: {
+                      ApiCode.requestTimeout1: true,
+                      ApiCode.success200: true,
+                      ApiCode.notFound404: true,
+                    },
+                    customMessages: {
+                      ApiCode.success200: true,
+                      ApiCode.notFound404: true,
+                    },
+                  );
+
+                  if (result) {
+                    await SharedPrefManager.instance.logout();
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => const LoginView()),
+                          (Route<dynamic> route) => false,
+                    );
+                  }else{
+                    LoadingWidget.closeLoader(context);
+                  }
+                }catch (e) {
+                  SnackBarWidget.showError(context);
+                }
+              }, okText: AppStrings.yes);
             },
           ),
           ListTile(
             leading: const Icon(Icons.exit_to_app),
-            title: const Text('Logout'),
+            title: const Text(AppStrings.logout),
             onTap: () {
-              // Handle the action for "Logout".
-              Navigator.pop(context);
-
+              AlertBoxes.okCancelDialog(context: context, header: AppStrings.logout, content: AppStrings.logoutDetail, onOk: () async {
+                await SharedPrefManager.instance.logout();
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const LoginView()),
+                      (Route<dynamic> route) => false,
+                );
+              }, okText: AppStrings.yes);
             },
           ),
           // A Divider to separate main options from support/feedback options.

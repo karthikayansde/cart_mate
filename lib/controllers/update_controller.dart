@@ -15,11 +15,12 @@ class UpdateController extends GetxController {
   // data members
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
+  final TextEditingController mailController = TextEditingController();
   var isLoading = false.obs;
   final apiService = ApiService();
 
   // data methods
-  Future<void> saveApi(BuildContext context) async {
+  Future<void> updateApi(BuildContext context) async {
     isLoading.value = true;
     bool isConnected = await NetworkController.checkConnectionShowSnackBar(context);
     if(!isConnected){
@@ -27,10 +28,13 @@ class UpdateController extends GetxController {
       return;
     }
     try {
+      String id = await SharedPrefManager.instance.getStringAsync(SharedPrefManager.id)??'';
       ApiResponse response = await apiService.request(
         method: ApiMethod.post,
-        endpoint: Endpoints.login,
+        endpoint: Endpoints.update,
         body: {
+          "_id": id,
+          "name": nameController.text,
         },
       );
       bool result = apiService.showApiResponse(
@@ -38,29 +42,19 @@ class UpdateController extends GetxController {
         response: response,
         codes: {
           ApiCode.requestTimeout1: true,
-          ApiCode.unauthorized401: true,
+          ApiCode.success200: true,
           ApiCode.notFound404: true,
         },
         customMessages: {
-          ApiCode.unauthorized401: true,
+          ApiCode.success200: true,
           ApiCode.notFound404: true,
         },
       );
 
       if(result){
-        await SharedPrefManager.instance.setBoolAsync(SharedPrefManager.isLoggedIn, true);
-        await SharedPrefManager.instance.setUserData(
-          name: response.data['name'],
-          code: response.data['code'],
-          id: response.data['_id'],
-          mail: response.data['email'],
-        );
+        await SharedPrefManager.instance.setStringAsync(SharedPrefManager.name, nameController.text);
+        Navigator.pop(context);
         isLoading.value = false;
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => HomeView()),
-              (Route<dynamic> route) => false,
-        );
       }
     } catch (e) {
       SnackBarWidget.showError(context);

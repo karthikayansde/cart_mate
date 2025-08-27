@@ -182,7 +182,7 @@ class _SignupViewState extends State<SignupView> {
                                 inputFormatters: [
                                   AppInputFormatters.limitedText(maxLength: 16),
                                 ],
-                                validator: AppValidators.password,
+                                validator: AppValidators.confirmPassword,
                                 hint: AppStrings.confirmPassword,
                                 controller:
                                     controller.confirmPasswordController,

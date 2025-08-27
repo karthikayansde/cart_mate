@@ -67,8 +67,8 @@ class TextFieldWidget extends StatelessWidget {
               ),
               onChanged: onChanged,
               decoration: InputDecoration(
-                filled: fillBgColor,
-                fillColor: bgColor,
+                filled: isReadOnly?true: fillBgColor,
+                fillColor: isReadOnly?Colors.grey.shade200 : bgColor,
                 suffixIcon: suffixIcon,
                 prefixIcon: prefixIcon,
                 prefixIconConstraints: BoxConstraints(maxHeight: 40, maxWidth: 40),

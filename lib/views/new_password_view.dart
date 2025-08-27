@@ -2,6 +2,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cart_mate/controllers/new_password_controller.dart';
 import 'package:cart_mate/utils/app_colors.dart';
 import 'package:cart_mate/utils/app_strings.dart';
+import 'package:cart_mate/utils/app_validators.dart';
 import 'package:cart_mate/widgets/background_image_widget.dart';
 import 'package:cart_mate/widgets/button_widgets.dart';
 import 'package:cart_mate/widgets/loading_widget.dart';
@@ -27,11 +28,22 @@ class _NewPasswordViewState extends State<NewPasswordView> {
     // TODO: implement initState
     super.initState();
     controller = Get.put(NewPasswordController());
+    controller.passwordController.text = '';
+    controller.confirmPasswordController.text = '';
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: widget.fromForgotPassword?null: AppBar(
+        automaticallyImplyLeading: false,
+        actions: [
+        IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back, size: 30),
+        ),],),
       body: Obx(
         () => Stack(
           children: [
@@ -66,10 +78,15 @@ class _NewPasswordViewState extends State<NewPasswordView> {
                               ),
                               const SizedBox(height: 20),
                               TextFieldWidget(
+                                isPassword: controller.isPasswordHidden.value,
                                 isBorderNeeded: true,
                                 hasHindOnTop: true,
+                                validator: AppValidators.password,
                                 suffixIcon: InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    controller.isPasswordHidden.value =
+                                        !controller.isPasswordHidden.value;
+                                  },
                                   child: Padding(
                                     padding: const EdgeInsets.only(
                                       left: 10,
@@ -92,10 +109,16 @@ class _NewPasswordViewState extends State<NewPasswordView> {
                                 hint: AppStrings.newPassword,
                               ),
                               TextFieldWidget(
+                                isPassword: controller.isConfirmPasswordHidden.value,
                                 isBorderNeeded: true,
                                 hasHindOnTop: true,
+                                validator: AppValidators.confirmPassword,
                                 suffixIcon: InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    controller.isConfirmPasswordHidden.value =
+                                        !controller.isConfirmPasswordHidden.value;
+
+                                  },
                                   child: Padding(
                                     padding: const EdgeInsets.only(
                                       left: 10,

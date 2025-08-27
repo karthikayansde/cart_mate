@@ -2,6 +2,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cart_mate/services/api/api_service.dart';
 import 'package:cart_mate/services/api/endpoints.dart';
 import 'package:cart_mate/services/network_service.dart';
+import 'package:cart_mate/utils/app_routes.dart';
 import 'package:cart_mate/views/home_view.dart';
 import 'package:cart_mate/views/otp_verification_view.dart';
 import 'package:cart_mate/widgets/snack_bar_widget.dart';
@@ -22,13 +23,6 @@ class SignupController extends GetxController {
   var isConfirmPasswordHidden = true.obs;
   var isLoading = false.obs;
   final apiService = ApiService();
-
-  PageRouteBuilder<void> transparentRoute(Widget page) {
-    return PageRouteBuilder(
-      opaque: false,
-      pageBuilder: (context, _, __) => page,
-    );
-  }
 
   // data methods
   Future<void> signupApi(BuildContext context) async {
@@ -71,7 +65,7 @@ class SignupController extends GetxController {
         isLoading.value = false;
         Navigator.push(
           context,
-          transparentRoute(
+          AppRoutes.transparentRoute(
             OtpVerificationView(
               verify: (otp, clearOtp) async {
                 bool isConnected = await NetworkController.checkConnectionShowSnackBar(context);
@@ -108,10 +102,10 @@ class SignupController extends GetxController {
 
                     await SharedPrefManager.instance.setBoolAsync(SharedPrefManager.isLoggedIn, true);
                     await SharedPrefManager.instance.setUserData(
-                      name: response.data['name'],
-                      code: response.data['code'],
-                      id: response.data['_id'],
-                      mail: response.data['email'],
+                      name: response.data["userData"]['name'],
+                      code: response.data["userData"]['code'],
+                      id: response.data["userData"]['_id'],
+                      mail: response.data["userData"]['email'],
                     );
 
                     Navigator.pushAndRemoveUntil(

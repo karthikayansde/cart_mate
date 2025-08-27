@@ -10,6 +10,13 @@ class AppValidators {
     return null;
   }
 
+  static String? mateCode(String? value) {
+    if (value == null || value.isEmpty) {
+      return AppStrings.codeValidator;
+    }
+    return null;
+  }
+
   static String? email(String? value) {
     if (value == null || value.isEmpty) {
       return AppStrings.emailEMTValidator;
@@ -24,6 +31,14 @@ class AppValidators {
       return AppStrings.passwordEMTValidator;
     } else if (value.length < 6) {
       return AppStrings.passwordValidator;
+    }
+    return null;
+  }
+  static String? confirmPassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return AppStrings.confirmPasswordEMTValidator;
+    } else if (value.length < 6) {
+      return AppStrings.confirmPasswordValidator;
     }
     return null;
   }

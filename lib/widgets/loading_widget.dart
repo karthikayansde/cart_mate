@@ -7,7 +7,8 @@ class LoadingWidget {
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
-        return loader();
+        return PopScope(canPop: false,
+        child: loader());
       },
     );
   }

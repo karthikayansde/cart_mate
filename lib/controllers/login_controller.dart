@@ -54,10 +54,10 @@ class LoginController extends GetxController {
       if(result){
         await SharedPrefManager.instance.setBoolAsync(SharedPrefManager.isLoggedIn, true);
         await SharedPrefManager.instance.setUserData(
-          name: response.data['name'],
-          code: response.data['code'],
-          id: response.data['_id'],
-          mail: response.data['email'],
+          name: response.data["data"]['name'],
+          code: response.data["data"]['code'],
+          id: response.data["data"]['_id'],
+          mail: response.data["data"]['email'],
         );
         isLoading.value = false;
         Navigator.pushAndRemoveUntil(

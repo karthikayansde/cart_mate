@@ -37,8 +37,8 @@ class MyApp extends StatelessWidget {
         ),
       ),
       // home: const SignupView(),
-      // home: isLoggedIn? HomeView(): const LoginView(),
-      home: HomeView(),
+      home: isLoggedIn? HomeView(): const LoginView(),
+      // home: HomeView(),
       // home: ForgotPasswordView()
       // home: NewPasswordView()
       // home: OtpVerificationView(),
