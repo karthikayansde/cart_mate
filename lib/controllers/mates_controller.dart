@@ -15,9 +15,8 @@ class MatesController extends GetxController {
   // data members
   var isLoading = false.obs;
   final apiService = ApiService();
-  var matesList = MatesModel().obs;
+  Rx<MatesModel> matesList = MatesModel().obs;
 
-  // data methods
   Future<void> getMateApi(BuildContext context) async {
     isLoading.value = true;
     bool isConnected = await NetworkController.checkConnectionShowSnackBar(context);

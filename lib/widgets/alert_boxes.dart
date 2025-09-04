@@ -74,4 +74,31 @@ class AlertBoxes {
       ),
     );
   }
+  static okDialogWithDialog({
+    required BuildContext context,
+    required String header,
+    required Widget content,
+    required VoidCallback onOk,
+  }){
+    return showCupertinoModalPopup(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Align(
+            alignment: Alignment.center, child: Text(header)),
+        content: content,
+        actions: <CupertinoDialogAction>[
+          CupertinoDialogAction(
+            isDestructiveAction: true,
+            onPressed: onOk,
+            child: Text(
+              AppStrings.ok,
+              style:
+              TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

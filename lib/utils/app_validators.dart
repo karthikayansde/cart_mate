@@ -9,6 +9,12 @@ class AppValidators {
     }
     return null;
   }
+  static String? unit(String? value) {
+    if (value == null || value.isEmpty) {
+      return AppStrings.uomValidator;
+    }
+    return null;
+  }
 
   static String? mateCode(String? value) {
     if (value == null || value.isEmpty) {

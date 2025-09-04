@@ -135,8 +135,9 @@ class ApiService {
     required String endpoint,
     Map<String, dynamic>? body,
     Map<String, String>? headers,
+    bool customUrl = false,
   }) async {
-    final Uri uri = Uri.parse('${Endpoints.baseUrl}$endpoint');
+    final Uri uri = Uri.parse('${customUrl?"":Endpoints.baseUrl}$endpoint');
 
     // Combine common headers with any request-specific headers
     final Map<String, String> requestHeaders = {
@@ -245,7 +246,7 @@ class ApiService {
     }
 
     // Determine the outcome based on HTTP status code
-    if (response.statusCode >= 200 && response.statusCode < 300) {
+    if (response.statusCode >= 200 && response.statusCode < 300 || response.statusCode == 304) {
       // Success (2xx status codes)
       return ApiResponse(
         code: ApiCode.success200.index,
@@ -320,7 +321,7 @@ class ApiService {
 
     Map<ApiCode, bool> codes = const {},
     Map<ApiCode, bool> customMessages = const {},
-  }) {
+      }) {
     ApiErrorConfig config = apiErrorConfigDefault;
 
     if (response.code != ApiCode.success200.index && useDefaultErrorConfig) {

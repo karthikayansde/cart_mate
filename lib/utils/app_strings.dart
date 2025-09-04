@@ -5,6 +5,11 @@ class AppStrings {
   static const String plsEnterMailPassword =
       "Please enter your email & password to Log in.";
   static const String email = "Email";
+  static const String editItem = "Edit Item";
+  static const String delete = "Delete";
+  static const String notes = "Notes";
+  static const String edit = "Edit";
+  static const String info = "Info";
   static const String password = "Password";
   static const String forgotPassword = "Forgot password?";
   static const String dontHaveAnAccount = "Don’t have an account?";
@@ -15,9 +20,10 @@ class AppStrings {
   static const String confirmPassword = "Confirm Password";
   static const String signup = "Sign up";
   static const String name = "Name";
+  static const String you = "You";
   static const String units = "Units";
   static const String tagMate = "Tag a mate";
-  static const String addNote = "Add Note";
+  static const String addNote = "Add note";
   static const String itemName = "Item name";
   static const String listName = "List name";
   static const String forgotPasswordTitle = "Forgot Password?";
@@ -39,6 +45,7 @@ class AppStrings {
   static const String otpHint = "Enter OTP";
   static const String verifyAndProceed = "Verify and Proceed";
   static const String nameValidator = "Please enter name";
+  static const String uomValidator = "Please enter unit";
   static const String codeValidator = "Please enter code";
   static const String emailEMTValidator = "Please enter email";
   static const String emailValidator = "Please enter a valid email";
@@ -73,6 +80,10 @@ class AppStrings {
   static const String enterYourFeedback = "Enter your feedback";
   static const String editProfile = "Edit Profile";
   static const String getYourCode = "Get Your Code";
+  static const String imageNotFound = "Image not found";
   static const String deleteAccount = "Delete Account";
+  static const String itemNameRequired = "Item name is required";
   static const String deleteAccountDetail = "Are you sure you want to delete your account? This action cannot be undone.";
+  static const String actionRestricted = "Action Restricted";
+  static const String creatorCanDelete = "Only the creator can delete this item. You can update its status instead.";
 }

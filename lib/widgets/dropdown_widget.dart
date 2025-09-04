@@ -3,10 +3,10 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
 class DropdownWidget extends StatefulWidget {
-  final int selectedTable;
+  final String selectedTable;
   final List<String> list;
   final double? width;
-  final ValueChanged<int> onChanged;
+  final ValueChanged<String> onChanged;
 
   const DropdownWidget({
     super.key,
@@ -47,7 +47,7 @@ class _DropdownWidgetState extends State<DropdownWidget> {
               Expanded(
                 child: Center(
                   child: Text(
-                    widget.list[widget.selectedTable],
+                    widget.selectedTable.split("mzqxv9rklt8ph2wj")[0],
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(color: Colors.black, fontSize: 14),
                   ),
@@ -58,12 +58,11 @@ class _DropdownWidgetState extends State<DropdownWidget> {
             ],
           ),
         ),
-        value: widget.list[widget.selectedTable],
+        value: widget.selectedTable,
         items: _buildItems(),
         onChanged: (String? value) {
           if (value != null) {
-            final newIndex = widget.list.indexOf(value);
-            widget.onChanged(newIndex);
+            widget.onChanged(value);
           }
         },
         dropdownStyleData: DropdownStyleData(
@@ -92,7 +91,7 @@ class _DropdownWidgetState extends State<DropdownWidget> {
             ),
           ),
           searchMatchFn: (item, searchValue) {
-            return item.value.toString().toLowerCase().contains(searchValue.toLowerCase());
+            return item.value!.split('mzqxv9rklt8ph2wj')[0].toString().toLowerCase().contains(searchValue.toLowerCase());
           },
         ),
         onMenuStateChange: (isOpen) {
@@ -106,23 +105,30 @@ class _DropdownWidgetState extends State<DropdownWidget> {
 
   List<DropdownMenuItem<String>> _buildItems() {
     return widget.list.map((item) {
-      final isSelected = widget.list[widget.selectedTable] == item;
+      final isSelected = widget.selectedTable == item;
       return DropdownMenuItem<String>(
         value: item,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
           children: [
-            Expanded(
-              child: Text(
-                item,
-                style: TextStyle(
-                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                  color: isSelected ? AppColors.primary : Colors.black,
+            Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    item.split("mzqxv9rklt8ph2wj")[0],
+                    style: TextStyle(
+                      fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                      color: isSelected ? AppColors.primary : Colors.black,
+                    ),
+                  ),
                 ),
-              ),
+                if (isSelected)
+                  const Icon(Icons.check, color: AppColors.primary, size: 16),
+              ],
             ),
-            if (isSelected)
-              const Icon(Icons.check, color: AppColors.primary, size: 16),
+            Spacer(),
+            Container(width: double.maxFinite,height: 0.5,color: AppColors.black,)
           ],
         ),
       );

@@ -10,6 +10,7 @@ import 'package:cart_mate/widgets/button_widgets.dart';
 import 'package:cart_mate/widgets/loading_widget.dart';
 import 'package:cart_mate/widgets/snack_bar_widget.dart';
 import 'package:cart_mate/widgets/text_field_widgets.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../utils/app_input_formatters.dart';
@@ -31,8 +32,11 @@ class _LoginViewState extends State<LoginView> {
     // TODO: implement initState
     super.initState();
     controller = Get.put(LoginController());
+    if(kDebugMode){
+      controller.emailController.text = "karthikayansde@gmail.com";
+      controller.passwordController.text = "karthik";}else{
     controller.emailController.text = "";
-    controller.passwordController.text = "";
+    controller.passwordController.text = "";}
     controller.isPasswordHidden.value = true;
   }
 

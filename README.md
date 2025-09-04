@@ -1,5 +1,4 @@
 # cart_mate
-need to update items to user in delete of user(re assign)
 
 A new Flutter project.
 
