@@ -1,10 +1,12 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cart_mate/controllers/signup_controller.dart';
+import 'package:cart_mate/services/url_opener.dart';
 import 'package:cart_mate/utils/app_input_formatters.dart';
 import 'package:cart_mate/utils/app_validators.dart';
 import 'package:cart_mate/widgets/background_image_widget.dart';
 import 'package:cart_mate/widgets/loading_widget.dart';
 import 'package:cart_mate/widgets/snack_bar_widget.dart';
+import 'package:flutter/gestures.dart';
 import 'package:get/get.dart';
 import 'package:cart_mate/utils/app_colors.dart';
 import 'package:cart_mate/utils/app_strings.dart';
@@ -240,6 +242,42 @@ class _SignupViewState extends State<SignupView> {
                                   }
                                 },
                                 label: AppStrings.signup,
+                              ),
+                              SizedBox(height: 10,),
+                              Text.rich(
+                                TextSpan(
+                                  text: "By continuing, you agree to our ",
+                                  children: [
+                                    TextSpan(
+                                      text: "Cart Mate Terms of Service",
+                                      style: TextStyle(
+                                          color: AppColors.primary,
+                                          decoration: TextDecoration.underline,
+                                          decorationColor: AppColors.primary,
+                                          fontWeight: FontWeight.w500
+                                      ),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () {
+                                          UrlOpener.launch("https://sites.google.com/view/cartmate-termsconditions");
+                                        },
+                                    ),
+                                    const TextSpan(text: " and "),
+                                    TextSpan(
+                                      text: "Privacy Policy",
+                                      style: TextStyle(
+                                        color: AppColors.primary,
+                                        decoration: TextDecoration.underline,
+                                        decorationColor: AppColors.primary,
+                                          fontWeight: FontWeight.w500
+                                      ),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () {
+                                          UrlOpener.launch("https://sites.google.com/view/cartmate-privacypolicy/");
+                                        },
+                                    ),
+                                  ],
+                                ),
+                                textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 20),
                             ],

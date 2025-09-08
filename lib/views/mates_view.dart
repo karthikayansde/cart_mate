@@ -66,11 +66,14 @@ class _MatesViewState extends State<MatesView> {
           style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
         actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(Icons.arrow_back, size: 30),
+          Padding(
+            padding: const EdgeInsets.only(right: 9.0),
+            child: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.arrow_back, size: 30, color: AppColors.black,),
+            ),
           ),
         ],
       ),
@@ -89,63 +92,82 @@ class _MatesViewState extends State<MatesView> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    AppStrings.mates,
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  child: Row(
+                    children: [
+                      Text(
+                        AppStrings.mates,
+                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                      Spacer(),
+                      IconButton(onPressed: () async {
+                        if(!controller.isLoading.value){
+                          await init();
+                        }
+                      }, icon: Image.asset("assets/images/refresh.png", height: 30,)),
+                    ],
                   ),
                 ),
 
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: controller.matesList.value.data != null?controller.matesList.value.data?.length:0,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: EdgeInsetsGeometry.only(
-                          bottom: index == (controller.matesList.value.data!.length - 1)
-                              ? 170
-                              : 0,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8.0,
-                            vertical: 4,
+                  child: RefreshIndicator(
+                    onRefresh: () async {
+                      if(!controller.isLoading.value){
+                        await init();
+                      }
+                    },
+                    child: controller.matesList.value.data == null || controller.matesList.value.data!.isEmpty ? Padding(
+                        padding: EdgeInsetsGeometry.only(left: 10, right: 10, bottom: 200),
+                        child: Center(child: Text(AppStrings.noMates,textAlign: TextAlign.center, style: TextStyle(fontSize: 18, color: AppColors.black, fontWeight: FontWeight.w500),))) : ListView.builder(
+                      itemCount: controller.matesList.value.data != null?controller.matesList.value.data?.length:0,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsetsGeometry.only(
+                            bottom: index == (controller.matesList.value.data!.length - 1)
+                                ? 170
+                                : 0,
                           ),
-                          child: Container(
-                            decoration: ShapeDecoration(
-                              color: AppColors.listBg,
-                              shape: ContinuousRectangleBorder(
-                                borderRadius: BorderRadius.circular(45.0),
-                              ),
-                              shadows: const [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  blurRadius: 8,
-                                  offset: Offset(0, 4),
-                                ),
-                              ],
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0,
+                              vertical: 4,
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    controller.matesList.value.data?.elementAt(index).name??'',
-                                    style: TextStyle(fontSize: 18),
-                                  ),
-                                  Spacer(),
-                                  IconButton(
-                                    onPressed: () async {
-                                      await controller.deleteMateApi(context, controller.matesList.value.data?.elementAt(index).sId??'');
-                                    },
-                                    icon: Icon(Icons.delete_outline, size: 24),
+                            child: Container(
+                              decoration: ShapeDecoration(
+                                color: AppColors.listBg,
+                                shape: ContinuousRectangleBorder(
+                                  borderRadius: BorderRadius.circular(45.0),
+                                ),
+                                shadows: const [
+                                  BoxShadow(
+                                    color: Colors.black26,
+                                    blurRadius: 8,
+                                    offset: Offset(0, 4),
                                   ),
                                 ],
                               ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      controller.matesList.value.data?.elementAt(index).name??'',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    Spacer(),
+                                    IconButton(
+                                      onPressed: () async {
+                                        await controller.deleteMateApi(context, controller.matesList.value.data?.elementAt(index).sId??'');
+                                      },
+                                      icon: Icon(Icons.delete_outline, size: 24),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                 ),
               ],

@@ -28,7 +28,6 @@ class HomeController extends GetxController {
 
   Future<void> init() async {
     isLoading.value = true;
-    id.value = (await SharedPrefManager.instance.getStringAsync(SharedPrefManager.id) ?? '');
     await getUomApi();
     isLoading.value = false;
   }

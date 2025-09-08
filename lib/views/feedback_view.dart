@@ -9,9 +9,11 @@ import 'package:cart_mate/widgets/dropdown_widget.dart';
 import 'package:cart_mate/widgets/loading_widget.dart';
 import 'package:cart_mate/widgets/text_field_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../controllers/update_controller.dart';
+import '../utils/app_input_formatters.dart';
 
 
 class FeedbackView extends StatefulWidget {
@@ -71,12 +73,15 @@ class _FeedbackViewState extends State<FeedbackView> {
                             onChanged: (p0) {},
                             maxLines: 3,radius: 20,
                             validator: AppValidators.name,
+                            inputFormatters: [
+                              AppInputFormatters.limitedText(maxLength: 255),
+                              AppInputFormatters.allowLettersNumbersAndSpacesOnlyFormatter,
+                            ],
                             hint: AppStrings.enterYourFeedback,
                             controller: controller.feedbackController,
                           ),
 
                           SizedBox(height: 20,),
-
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [

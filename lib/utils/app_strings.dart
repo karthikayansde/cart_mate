@@ -86,4 +86,6 @@ class AppStrings {
   static const String deleteAccountDetail = "Are you sure you want to delete your account? This action cannot be undone.";
   static const String actionRestricted = "Action Restricted";
   static const String creatorCanDelete = "Only the creator can delete this item. You can update its status instead.";
+  static const String noMates = "You have no mates yet.\nAdd mates by sharing your code or entering your family and friends' codes to start shopping together.";
+  static const String noItems = "No items in this list.\nAdd items and assign them to your mates or yourself.";
 }

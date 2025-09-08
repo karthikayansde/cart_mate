@@ -75,7 +75,7 @@ class _AddMateViewState extends State<AddMateView> {
                                 isBorderNeeded: true,
                                 hasHindOnTop: true,
                                 inputFormatters: [
-                                  AppInputFormatters.limitedText(maxLength: 6)
+                                  AppInputFormatters.limitedText(maxLength: 6),
                                 ],
                                 onChanged: (p0) {},
                                 validator: AppValidators.mateCode,

@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "8036808949",
-    "project_id": "cart-mate-704f9",
-    "storage_bucket": "cart-mate-704f9.firebasestorage.app"
+    "project_number": "663503788797",
+    "project_id": "cart-mate-karthi",
+    "storage_bucket": "cart-mate-karthi.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:8036808949:android:5a65e8b900f99ef3ee6dbc",
+        "mobilesdk_app_id": "1:663503788797:android:f0d9eb256d3d7017ebfc94",
         "android_client_info": {
-          "package_name": "com.example.cart_mate"
+          "package_name": "com.karthikayanapps.cartmate"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAVvspZI3_80vrD526Vd5cszHHmTOapiQE"
+          "current_key": "AIzaSyCopYVsso4ZRrCppDPXETKcjde6d8HPm90"
         }
       ],
       "services": {

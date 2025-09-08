@@ -159,7 +159,7 @@ class _ItemViewState extends State<ItemView> {
                                                   decimal: true,
                                                 ),
                                             inputFormatters: [
-                                              MaxNumericValueFormatter(),
+                                              MaxNumericValueFormatter(maxValue: 1000, decimalPlaces: 2),
                                             ],
                                             validator: AppValidators.unit,
                                             hint: AppStrings.units,
