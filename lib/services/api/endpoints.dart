@@ -13,6 +13,7 @@ class Endpoints {
   static String get forgotPassword => '/auth/forgot-password/';
   static String get changePassword => '/auth/change-password';
 
+  static String get feedback => '/auth/feed-back';
   // mate
   static String get addMate => '/mates/add';
   static String get getMates => '/mates/list/';
@@ -27,6 +28,7 @@ class Endpoints {
   static String get getItems => '/item/getItems/';
   static String get updateStatus => '/item/status-update/';
   static String get deleteItem => '/item/delete-item';
+
   // image generation
   static String getImage(String name) {
     String newString = name.replaceAll(' ', '+');

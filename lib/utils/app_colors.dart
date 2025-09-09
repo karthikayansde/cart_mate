@@ -11,7 +11,7 @@ class AppColors{
   /// app colors
   static const Color yelloLight = Color(0xFFFFF5E9);
   static const Color primary = Color(0xFF006AD9);
-  static const Color primaryLight = Color(0xFFCA4B4B);
+  static const Color primaryRed = Color(0xFFAC0000);
   static const Color bgTabSider = Color(0xFFFEBCBD);
   static const Color darkPrim = Color(0xFF413247);
   static const Color listBg = Color(0xFFF8E5FF);

@@ -45,6 +45,7 @@ class AppStrings {
   static const String otpHint = "Enter OTP";
   static const String verifyAndProceed = "Verify and Proceed";
   static const String nameValidator = "Please enter name";
+  static const String feedbackValidator = "Please enter feedback";
   static const String uomValidator = "Please enter unit";
   static const String codeValidator = "Please enter code";
   static const String emailEMTValidator = "Please enter email";

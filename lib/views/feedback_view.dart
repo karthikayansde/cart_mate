@@ -72,7 +72,7 @@ class _FeedbackViewState extends State<FeedbackView> {
                             hasHindOnTop: true,
                             onChanged: (p0) {},
                             maxLines: 3,radius: 20,
-                            validator: AppValidators.name,
+                            validator: AppValidators.feedback,
                             inputFormatters: [
                               AppInputFormatters.limitedText(maxLength: 255),
                               AppInputFormatters.allowLettersNumbersAndSpacesOnlyFormatter,
@@ -100,9 +100,9 @@ class _FeedbackViewState extends State<FeedbackView> {
                                 width: 120,
                                 elevation: true,
                                 color: AppColors.menuBg,
-                                onPressed: () {
+                                onPressed: () async {
                                   if(controller.formKey.currentState!.validate()){
-
+                                    await controller.saveApi(context);
                                   }
                                 },
                                 labelColor: AppColors.black,

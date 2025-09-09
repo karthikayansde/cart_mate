@@ -33,6 +33,7 @@ class SharedPrefManager {
   static const String code = 'code';
   static const String id = 'id';
   static const String mail = 'mail';
+  static const String isOnboardingComplete = 'isOnboardingComplete';
 
   Future<void> setUserData({
     required String name,

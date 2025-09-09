@@ -11,6 +11,7 @@ import 'package:cart_mate/widgets/loading_widget.dart';
 import 'package:cart_mate/widgets/snack_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../controllers/mates_controller.dart';
 import '../models/items_model.dart';
@@ -43,8 +44,44 @@ class _HomeViewState extends State<HomeView> {
     controller.isLoading.value = true;
     controller.id.value = (await SharedPrefManager.instance.getStringAsync(SharedPrefManager.id) ?? '');
     await controller.getItemsApi(context);
+    _requestNotificationPermission();
     controller.isLoading.value = false;
   }
+
+  // Method to request notification permission from the user.
+  Future<void> _requestNotificationPermission() async {
+    final status = await Permission.notification.request();
+    if (status.isPermanentlyDenied) {
+      _showSettingsDialog();
+    }
+  }
+
+  // Helper method to show a dialog guiding the user to app settings.
+  void _showSettingsDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Permission Required'),
+        content: const Text('Notifications were permanently denied. Please go to settings to enable them.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              openAppSettings(); // Opens the app settings page.
+            },
+            child: const Text('Open Settings'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,10 +175,15 @@ class _HomeViewState extends State<HomeView> {
                       },
                       child: controller.myList.isEmpty? Padding(
                           padding: EdgeInsetsGeometry.only(left: 10, right: 10, bottom: 200),
-                          child: Center(child: Text(AppStrings.noItems,textAlign: TextAlign.center, style: TextStyle(fontSize: 18, color: AppColors.black, fontWeight: FontWeight.w500),)))  : ListView.builder(
+                          child: Center(child: Column(
+                            children: [
+                              Image.asset("assets/images/empty_image.png", width: 300,),
+                              Text(AppStrings.noItems,textAlign: TextAlign.center, style: TextStyle(fontSize: 18, color: AppColors.black, fontWeight: FontWeight.w500),),
+                            ],
+                          )))  : ListView.builder(
                         itemCount: controller.myList.length,
                         itemBuilder: (context, index) {
-                          return Padding(padding: EdgeInsetsGeometry.only(bottom: index == (controller.myList.length-1)? 120: 0), child: MenuCard(
+                          return Padding(padding: EdgeInsetsGeometry.only(bottom: index == (controller.myList.length-1)? 400: 0), child: MenuCard(
                             onStatusUpdate: () async {
                               return await controller.updateStatus(context, controller.myList[index].sId!);
                             },
@@ -169,11 +211,16 @@ class _HomeViewState extends State<HomeView> {
                       },
                       child: controller.mateList.isEmpty? Padding(
                           padding: EdgeInsetsGeometry.only(left: 10, right: 10, bottom: 200),
-                          child: Center(child: Text(AppStrings.noItems,textAlign: TextAlign.center, style: TextStyle(fontSize: 18, color: AppColors.black, fontWeight: FontWeight.w500),)))
+                          child: Center(child: Column(
+                            children: [
+                              Image.asset("assets/images/empty_image.png", width: 300,),
+                              Text(AppStrings.noItems,textAlign: TextAlign.center, style: TextStyle(fontSize: 18, color: AppColors.black, fontWeight: FontWeight.w500),),
+                            ],
+                          )))
                           : ListView.builder(
                         itemCount: controller.mateList.length,
                         itemBuilder: (context, index) {
-                          return Padding(padding: EdgeInsetsGeometry.only(bottom: index == (controller.mateList.length-1)? 120: 0), child: MenuCard(
+                          return Padding(padding: EdgeInsetsGeometry.only(bottom: index == (controller.mateList.length-1)? 400: 0), child: MenuCard(
                             onStatusUpdate: () async {
                               return false;
                             },
@@ -186,7 +233,7 @@ class _HomeViewState extends State<HomeView> {
                 ],
               ),
               Positioned(
-                  bottom: 20,
+                  bottom: 50,
                   right: 20,
                   child: controller.selectedTabIndex.value == 0?
                 //   Container(

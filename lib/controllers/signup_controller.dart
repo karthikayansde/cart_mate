@@ -6,6 +6,7 @@ import 'package:cart_mate/utils/app_routes.dart';
 import 'package:cart_mate/views/home_view.dart';
 import 'package:cart_mate/views/otp_verification_view.dart';
 import 'package:cart_mate/widgets/snack_bar_widget.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../services/shared_pref_manager.dart';
@@ -35,6 +36,8 @@ class SignupController extends GetxController {
       return;
     }
     try {
+
+      String? token = await FirebaseMessaging.instance.getToken();
       ApiResponse response = await apiService.request(
         method: ApiMethod.post,
         endpoint: Endpoints.signUp,
@@ -42,6 +45,7 @@ class SignupController extends GetxController {
           "name": nameController.text,
           "email": emailController.text,
           "password": passwordController.text,
+          "fcm": token
         },
       );
 

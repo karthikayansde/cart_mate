@@ -5,6 +5,8 @@ import 'package:cart_mate/services/network_service.dart';
 import 'package:cart_mate/views/home_view.dart';
 import 'package:cart_mate/widgets/loading_widget.dart';
 import 'package:cart_mate/widgets/snack_bar_widget.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,12 +31,17 @@ class LoginController extends GetxController {
       return;
     }
     try {
+      String? token;
+      if(!kIsWeb){
+        token = await FirebaseMessaging.instance.getToken();
+      }
       ApiResponse response = await apiService.request(
         method: ApiMethod.post,
         endpoint: Endpoints.login,
         body: {
           "email": emailController.text,
           "password": passwordController.text,
+          "fcm": token
         },
       );
       bool result = apiService.showApiResponse(

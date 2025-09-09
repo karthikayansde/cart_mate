@@ -27,10 +27,13 @@ class FeedbackController extends GetxController {
       return;
     }
     try {
+      String id = await SharedPrefManager.instance.getStringAsync(SharedPrefManager.id)??'';
       ApiResponse response = await apiService.request(
         method: ApiMethod.post,
-        endpoint: Endpoints.login,
+        endpoint: Endpoints.feedback,
         body: {
+          "id": id,
+          "notes": feedbackController.text
         },
       );
       bool result = apiService.showApiResponse(
@@ -38,29 +41,15 @@ class FeedbackController extends GetxController {
         response: response,
         codes: {
           ApiCode.requestTimeout1: true,
-          ApiCode.unauthorized401: true,
-          ApiCode.notFound404: true,
+          ApiCode.success200: true,
         },
         customMessages: {
-          ApiCode.unauthorized401: true,
-          ApiCode.notFound404: true,
+          ApiCode.success200: true,
         },
       );
 
       if(result){
-        await SharedPrefManager.instance.setBoolAsync(SharedPrefManager.isLoggedIn, true);
-        await SharedPrefManager.instance.setUserData(
-          name: response.data['name'],
-          code: response.data['code'],
-          id: response.data['_id'],
-          mail: response.data['email'],
-        );
-        isLoading.value = false;
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => HomeView()),
-              (Route<dynamic> route) => false,
-        );
+        Navigator.pop(context);
       }
     } catch (e) {
       SnackBarWidget.showError(context);

@@ -4,6 +4,7 @@ import 'package:cart_mate/utils/app_colors.dart';
 import 'package:cart_mate/utils/app_strings.dart';
 import 'package:cart_mate/views/home_view.dart';
 import 'package:cart_mate/views/login_view.dart';
+import 'package:cart_mate/views/onboarding_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,8 @@ Future<void> main() async {
   // Keeps native splash ON until we remove it manually
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   final bool isLoggedIn = (await SharedPrefManager.instance.getBoolAsync(SharedPrefManager.isLoggedIn))??false;
-  FlutterNativeSplash.remove();
+  final bool isOnboardingComplete = (await SharedPrefManager.instance.getBoolAsync(SharedPrefManager.isOnboardingComplete))??false;
+
   if(!kIsWeb){
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
@@ -29,12 +31,15 @@ Future<void> main() async {
     await LocalNotificationService().init();
   }
 
-  runApp(MyApp(isLoggedIn: isLoggedIn,));
+  FlutterNativeSplash.remove();
+
+  runApp(MyApp(isLoggedIn: isLoggedIn, isOnboarding: isOnboardingComplete,));
 }
 
 class MyApp extends StatelessWidget {
   final bool isLoggedIn;
-  const MyApp({super.key, required this.isLoggedIn});
+  final bool isOnboarding;
+  const MyApp({super.key, required this.isLoggedIn, required this.isOnboarding});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -49,7 +54,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       // home: const SignupView(),
-      home: isLoggedIn? HomeView(): const LoginView(),
+      home: (!isOnboarding)? OnboardingScreen(): isLoggedIn? HomeView(): const LoginView(),
       // home: HomeView(),
       // home: ForgotPasswordView()
       // home: NewPasswordView()
@@ -66,7 +71,6 @@ class NotificationService {
   void initFCM() {
     // // Request permission (for iOS)
     // _firebaseMessaging.requestPermission();
-
 
     // Listen for foreground messages
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
