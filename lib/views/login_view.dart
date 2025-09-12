@@ -84,7 +84,6 @@ class _LoginViewState extends State<LoginView> {
                                   child: Icon(Icons.mail_outline_outlined, size: 18),
                                 ),
                                 inputFormatters: AppInputFormatters.email(),
-                                onChanged: (p0) {},
                                 validator: AppValidators.email,
                                 hint: AppStrings.email,
                                 controller: controller.emailController,
@@ -112,7 +111,6 @@ class _LoginViewState extends State<LoginView> {
                                   ),
                                 ),
                                 maxLines: 1,
-                                onChanged: (p0) {},
                                 inputFormatters: [
                                   AppInputFormatters.limitedText(maxLength: 16),
                                 ],

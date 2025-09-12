@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class TextFieldWidget extends StatelessWidget {
-  TextFieldWidget({super.key, required this.controller, required this.hint, this.radius = 50, this.contentPadding, this.isReadOnly = false, this.suffixIcon, this.prefixIcon, this.isPassword = false, this.keyboardType, this.inputFormatters, this.formKey, this.validator, this.focusNode, this.maxLines, this.onTap, this.enableInteractiveSelection, required this.onChanged, this.hasHindOnTop = false, this.bgColor = AppColors.white, this.fillBgColor = false, this.isBorderNeeded = false, this.hintColor, this.header, this.maxLength});
+  TextFieldWidget({super.key, required this.controller, required this.hint, this.radius = 50, this.contentPadding, this.isReadOnly = false, this.suffixIcon, this.prefixIcon, this.isPassword = false, this.keyboardType, this.inputFormatters, this.formKey, this.validator, this.focusNode, this.maxLines, this.onTap, this.enableInteractiveSelection, this.onChanged, this.hasHindOnTop = false, this.bgColor = AppColors.white, this.fillBgColor = false, this.isBorderNeeded = false, this.hintColor, this.header, this.maxLength});
   final TextEditingController controller;
   final String hint;
   final String? header;
@@ -18,7 +18,7 @@ class TextFieldWidget extends StatelessWidget {
   final bool? fillBgColor;
   final VoidCallback? onTap;
   final FocusNode? focusNode;
-  final void Function(String) onChanged;
+  final void Function(String)? onChanged;
   Key? formKey;
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType? keyboardType;

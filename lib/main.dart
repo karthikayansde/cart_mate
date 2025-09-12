@@ -1,3 +1,5 @@
+
+import 'package:cart_mate/services/api/api_service.dart';
 import 'package:cart_mate/services/local_notification_service.dart';
 import 'package:cart_mate/services/shared_pref_manager.dart';
 import 'package:cart_mate/utils/app_colors.dart';
@@ -55,7 +57,6 @@ class MyApp extends StatelessWidget {
       ),
       // home: const SignupView(),
       home: (!isOnboarding)? OnboardingScreen(): isLoggedIn? HomeView(): const LoginView(),
-      // home: HomeView(),
       // home: ForgotPasswordView()
       // home: NewPasswordView()
       // home: OtpVerificationView(),

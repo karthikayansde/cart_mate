@@ -32,7 +32,7 @@ class AppValidators {
   static String? email(String? value) {
     if (value == null || value.isEmpty) {
       return AppStrings.emailEMTValidator;
-    } else if (!AppInputFormatters.emailRegExp.hasMatch(value)) {
+    } else if (!AppInputFormatters.emailPatternRegExp.hasMatch(value)) {
       return AppStrings.emailValidator;
     }
     return null;

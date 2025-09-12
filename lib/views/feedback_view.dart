@@ -75,7 +75,11 @@ class _FeedbackViewState extends State<FeedbackView> {
                             validator: AppValidators.feedback,
                             inputFormatters: [
                               AppInputFormatters.limitedText(maxLength: 255),
-                              AppInputFormatters.allowLettersNumbersAndSpacesOnlyFormatter,
+                              AppInputFormatters.spaceFormatter,
+                              AppInputFormatters.smallLettersFormatter,
+                              AppInputFormatters.capitalLettersFormatter,
+                              AppInputFormatters.numbersFormatter,
+
                             ],
                             hint: AppStrings.enterYourFeedback,
                             controller: controller.feedbackController,

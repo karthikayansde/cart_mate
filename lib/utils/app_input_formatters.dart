@@ -1,31 +1,47 @@
 import 'package:flutter/services.dart';
-// goals
-// block Emoji
-// block profanity and Hate Speech (optional)
-// block special characters
-// limit char count
-// block next line
-// block urls and links
-// sql injection codes
-// allow only needed characters
 
 class AppInputFormatters {
-  // --- Regular Expressions ---
-  // static final RegExp alphabeticRegExp = RegExp(r'[a-zA-Z\s]');
-  // static final RegExp blockWhiteSpaceRegExp = RegExp(r'\s');
-  static final RegExp emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$');
-  static final RegExp emailRegExpText = RegExp(r'[a-zA-Z0-9@._-]');
-  static final RegExp allowLettersNumbersAndSpaces = RegExp(r'[a-zA-Z0-9\s]');
+  /// --- Regular Expressions ---
+  // email
+  static final RegExp emailPatternRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$');
+  static final RegExp emailRegExp = RegExp(r'[a-zA-Z0-9@._-]');
+  // raw
+  static final RegExp smallLettersRegExp = RegExp(r'[a-z]');
+  static final RegExp capitalLettersRegExp = RegExp(r'[A-Z]');
+  static final RegExp numbersRegExp = RegExp(r'[0-9]');
+  static final RegExp decimalRegExp = RegExp(r'[0-9.]');
+  static final RegExp spaceRegExp = RegExp(r'\s');
+  static final RegExp newLineRegExp = RegExp(r'\n');
+  static final RegExp punctuationAndSymbolsRegExp = RegExp(r'''[.,!?;:\-_'"\(\)\[\]\{\}@#\$%&\*\+=<>/\\|~`^]''');
+  // combinations
+  static final RegExp lettersRegExp = RegExp(r'[a-zA-Z]');
+  static final RegExp lettersSpaceRegExp = RegExp(r'[a-zA-Z\s]');
+  static final RegExp lettersAndNumbersRegExp = RegExp(r'[a-zA-Z0-9]');
+  static final RegExp lettersNumbersSpaceRegExp = RegExp(r'[a-zA-Z0-9\s]');
+  static final RegExp lettersNumbersSpaceSymbolsRegExp  = RegExp(r'''[a-zA-Z0-9\s.,!?;:\-_'"\(\)\[\]\{\}@#\$%&\*\+=<>/\\|~`^]''');
 
-  // --- Single Formatters ---
-  // static final TextInputFormatter allowDigitsOnly = FilteringTextInputFormatter.digitsOnly;
-  // static final TextInputFormatter denySpaces = FilteringTextInputFormatter.deny(blockWhiteSpaceRegExp);
-  static final TextInputFormatter emailFormat = FilteringTextInputFormatter.allow(emailRegExpText);
-  static final TextInputFormatter allowLettersNumbersAndSpacesOnlyFormatter = FilteringTextInputFormatter.allow(allowLettersNumbersAndSpaces);
+  /// --- Single Formatters ---
+  static final TextInputFormatter emailFormat = FilteringTextInputFormatter.allow(emailRegExp);
+  // raw
+  static final TextInputFormatter smallLettersFormat= FilteringTextInputFormatter.allow(smallLettersRegExp);
+  static final TextInputFormatter capitalLettersFormat= FilteringTextInputFormatter.allow(capitalLettersRegExp);
+  static final TextInputFormatter numbersFormat= FilteringTextInputFormatter.allow(numbersRegExp);
+  static final TextInputFormatter decimalFormat= FilteringTextInputFormatter.allow(decimalRegExp);
+  static final TextInputFormatter spaceFormat= FilteringTextInputFormatter.allow(spaceRegExp);
+  static final TextInputFormatter newLineFormat= FilteringTextInputFormatter.allow(newLineRegExp);
+  static final TextInputFormatter punctuationAndSymbolsFormat = FilteringTextInputFormatter.allow(punctuationAndSymbolsRegExp);
+  // combinations
+  static final TextInputFormatter lettersFormat= FilteringTextInputFormatter.allow(lettersRegExp);
+  static final TextInputFormatter lettersSpaceFormat= FilteringTextInputFormatter.allow(lettersSpaceRegExp);
+  static final TextInputFormatter lettersAndNumbersFormat= FilteringTextInputFormatter.allow(lettersAndNumbersRegExp);
+  static final TextInputFormatter lettersNumbersSpaceFormat= FilteringTextInputFormatter.allow(lettersNumbersSpaceRegExp);
+  static final TextInputFormatter lettersNumbersSpaceSymbolsFormat= FilteringTextInputFormatter.allow(lettersNumbersSpaceSymbolsRegExp);
+
   static TextInputFormatter limitedText({required int maxLength}) {
     return LengthLimitingTextInputFormatter(maxLength);
   }
-  // --- Methods for Group Formatters ---
+
+  /// --- Methods for Group Formatters ---
   static List<TextInputFormatter> email()=>[
     emailFormat,
   ];
@@ -66,58 +82,19 @@ class MaxNumericValueFormatter extends TextInputFormatter {
   }
 }
 
-// import 'package:flutter/services.dart';
-//
-// class AppInputFormatters {
-//   // --- Regular Expressions ---
-//   // Allow
-//   static final RegExp alphanumericAndSpacesRegExp = RegExp(r'[a-zA-Z0-9\s]');
-//   static final RegExp emailAllowedCharactersRegExp = RegExp(r'[a-zA-Z0-9@._-]');
-//
-//   // Block
-//   static final RegExp emojiRegExp = RegExp(r'\p{Emoji}', unicode: true);
-//   static final RegExp profanityRegExp = RegExp(r'badword1|badword2', caseSensitive: false); // Add your profanity list here
-//   static final RegExp specialCharactersRegExp = RegExp(r'[!@#$%^&*(),.?":{}|<>]');
+
+// goals
+// block Emoji
+// block profanity and Hate Speech (optional)
+// block special characters
+// limit char count
+// block next line
+// block urls and links
+// sql injection codes
+// allow only needed characters
+
 //   static final RegExp urlsRegExp = RegExp(
 //       r'(http|https):\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?');
 //   static final RegExp sqlInjectionRegExp = RegExp(
 //       r'(select|insert|update|delete|drop|union|--|;)', caseSensitive: false);
-//
-//   // --- Single Formatters ---
-//   static final TextInputFormatter blockEmojis = FilteringTextInputFormatter.deny(emojiRegExp);
-//   static final TextInputFormatter blockSpecialCharacters = FilteringTextInputFormatter.deny(specialCharactersRegExp);
-//   static final TextInputFormatter blockNewlines = FilteringTextInputFormatter.deny(RegExp(r'\n'));
-//   static final TextInputFormatter blockUrls = FilteringTextInputFormatter.deny(urlsRegExp);
-//   static final TextInputFormatter blockSqlInjection = FilteringTextInputFormatter.deny(sqlInjectionRegExp);
-//   static final TextInputFormatter blockProfanity = FilteringTextInputFormatter.deny(profanityRegExp);
-//   static final TextInputFormatter allowLettersNumbersAndSpacesOnlyFormatter =
-//   FilteringTextInputFormatter.allow(alphanumericAndSpacesRegExp);
-//   static final TextInputFormatter emailFormat =
-//   FilteringTextInputFormatter.allow(emailAllowedCharactersRegExp);
-//
-//   // --- Methods for Group Formatters ---
-//   /// Formatter for fields like names or titles
-//   static List<TextInputFormatter> generalText({int? maxLength}) {
-//     List<TextInputFormatter> formatters = [
-//       blockEmojis,
-//       blockSpecialCharacters,
-//       blockNewlines,
-//       blockUrls,
-//       blockSqlInjection,
-//       allowLettersNumbersAndSpacesOnlyFormatter,
-//     ];
-//     if (maxLength != null) {
-//       formatters.add(LengthLimitingTextInputFormatter(maxLength));
-//     }
-//     return formatters;
-//   }
-//
-//   /// Formatter for email fields
-//   static List<TextInputFormatter> email() {
-//     return [
-//       emailFormat,
-//       blockNewlines,
-//       LengthLimitingTextInputFormatter(100),
-//     ];
-//   }
-// }
+//   static final RegExp profanityRegExp = RegExp(r'badword1|badword2', caseSensitive: false); // Add your profanity list here
