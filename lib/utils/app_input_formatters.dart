@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 class AppInputFormatters {
   /// --- Regular Expressions ---
   // email
-  static final RegExp emailPatternRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$');
-  static final RegExp emailRegExp = RegExp(r'[a-zA-Z0-9@._-]');
+  static final RegExp emailPatternRegExp = RegExp( r"^(?![.])([a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+)(?<![.])@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[A-Za-z]{2,}$");
+  // static final RegExp emailPatternRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$');
+  // static final RegExp emailRegExp = RegExp(r'[a-zA-Z0-9@._-]');
+  static final RegExp emailRegExp = RegExp(r"[a-zA-Z0-9@.!#\$%&'\*\+\-/=\?\^_`\{\|\}~]");
   // raw
   static final RegExp smallLettersRegExp = RegExp(r'[a-z]');
   static final RegExp capitalLettersRegExp = RegExp(r'[A-Z]');
@@ -18,6 +20,7 @@ class AppInputFormatters {
   static final RegExp lettersSpaceRegExp = RegExp(r'[a-zA-Z\s]');
   static final RegExp lettersAndNumbersRegExp = RegExp(r'[a-zA-Z0-9]');
   static final RegExp lettersNumbersSpaceRegExp = RegExp(r'[a-zA-Z0-9\s]');
+  static final RegExp lettersNumbersSymbolsRegExp  = RegExp(r'''[a-zA-Z0-9.,!?;:\-_'"\(\)\[\]\{\}@#\$%&\*\+=<>/\\|~`^]''');
   static final RegExp lettersNumbersSpaceSymbolsRegExp  = RegExp(r'''[a-zA-Z0-9\s.,!?;:\-_'"\(\)\[\]\{\}@#\$%&\*\+=<>/\\|~`^]''');
 
   /// --- Single Formatters ---
@@ -35,6 +38,7 @@ class AppInputFormatters {
   static final TextInputFormatter lettersSpaceFormat= FilteringTextInputFormatter.allow(lettersSpaceRegExp);
   static final TextInputFormatter lettersAndNumbersFormat= FilteringTextInputFormatter.allow(lettersAndNumbersRegExp);
   static final TextInputFormatter lettersNumbersSpaceFormat= FilteringTextInputFormatter.allow(lettersNumbersSpaceRegExp);
+  static final TextInputFormatter lettersNumbersSymbolsFormat= FilteringTextInputFormatter.allow(lettersNumbersSymbolsRegExp);
   static final TextInputFormatter lettersNumbersSpaceSymbolsFormat= FilteringTextInputFormatter.allow(lettersNumbersSpaceSymbolsRegExp);
 
   static TextInputFormatter limitedText({required int maxLength}) {
