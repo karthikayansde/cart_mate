@@ -90,7 +90,11 @@ class _SignupViewState extends State<SignupView> {
                                     size: 18,
                                   ),
                                 ),
-                                onChanged: (p0) {},
+                                maxLines: 1,
+                                inputFormatters: [
+                                  AppInputFormatters.limitedText(maxLength: 255),
+                                  AppInputFormatters.lettersNumbersSpaceSymbolsFormat,
+                                ],
                                 validator: AppValidators.name,
                                 controller: controller.nameController,
                                 hint: AppStrings.name,
@@ -109,8 +113,8 @@ class _SignupViewState extends State<SignupView> {
                                     size: 18,
                                   ),
                                 ),
+                                maxLines: 1,
                                 inputFormatters: AppInputFormatters.email(),
-                                onChanged: (p0) {},
                                 validator: AppValidators.email,
                                 hint: AppStrings.email,
                                 controller: controller.emailController,
@@ -141,9 +145,9 @@ class _SignupViewState extends State<SignupView> {
                                   ),
                                 ),
                                 maxLines: 1,
-                                onChanged: (p0) {},
                                 inputFormatters: [
                                   AppInputFormatters.limitedText(maxLength: 16),
+                                  AppInputFormatters.lettersNumbersSymbolsFormat
                                 ],
                                 validator: AppValidators.password,
                                 hint: AppStrings.password,
@@ -180,9 +184,9 @@ class _SignupViewState extends State<SignupView> {
                                   ),
                                 ),
                                 maxLines: 1,
-                                onChanged: (p0) {},
                                 inputFormatters: [
                                   AppInputFormatters.limitedText(maxLength: 16),
+                                  AppInputFormatters.lettersNumbersSymbolsFormat
                                 ],
                                 validator: AppValidators.confirmPassword,
                                 hint: AppStrings.confirmPassword,
@@ -257,9 +261,9 @@ class _SignupViewState extends State<SignupView> {
                                           fontWeight: FontWeight.w500
                                       ),
                                       recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          UrlOpener.launch("https://sites.google.com/view/cartmate-termsconditions");
-                                        },
+                                        ..onTap = (){
+                                        UrlOpener.launch("https://sites.google.com/view/cartmate-termsconditions");
+                                      }
                                     ),
                                     const TextSpan(text: " and "),
                                     TextSpan(

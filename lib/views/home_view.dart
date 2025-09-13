@@ -38,13 +38,13 @@ class _HomeViewState extends State<HomeView> {
     super.initState();
     controller = Get.put(HomeController());
     matesController = Get.put(MatesController());
+    _requestNotificationPermission();
     init();
   }
   Future<void> init() async {
     controller.isLoading.value = true;
     controller.id.value = (await SharedPrefManager.instance.getStringAsync(SharedPrefManager.id) ?? '');
     await controller.getItemsApi(context);
-    _requestNotificationPermission();
     controller.isLoading.value = false;
   }
 

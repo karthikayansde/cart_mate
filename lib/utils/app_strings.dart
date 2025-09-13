@@ -50,6 +50,7 @@ class AppStrings {
   static const String codeValidator = "Please enter code";
   static const String emailEMTValidator = "Please enter email";
   static const String emailValidator = "Please enter a valid email";
+  static const String newPasswordEMTValidator = "Please enter a new password";
   static const String passwordEMTValidator = "Please enter a password";
   static const String passwordValidator = "Password must be at least 6 characters";
   static const String confirmPasswordEMTValidator = "Please enter a confirm password";

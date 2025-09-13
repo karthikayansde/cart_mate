@@ -30,6 +30,7 @@ class _FeedbackViewState extends State<FeedbackView> {
     // TODO: implement initState
     super.initState();
     controller = Get.put(FeedbackController());
+    controller.feedbackController.text = "";
   }
   @override
   Widget build(BuildContext context) {
@@ -70,12 +71,11 @@ class _FeedbackViewState extends State<FeedbackView> {
                             bgColor: AppColors.white,
                             isBorderNeeded: true,
                             hasHindOnTop: true,
-                            onChanged: (p0) {},
                             maxLines: 3,radius: 20,
                             validator: AppValidators.feedback,
                             inputFormatters: [
                               AppInputFormatters.limitedText(maxLength: 255),
-
+                              AppInputFormatters.lettersNumbersSpaceSymbolsFormat
                             ],
                             hint: AppStrings.enterYourFeedback,
                             controller: controller.feedbackController,

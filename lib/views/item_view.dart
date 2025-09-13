@@ -137,7 +137,11 @@ class _ItemViewState extends State<ItemView> {
                                       bgColor: AppColors.white,
                                       isBorderNeeded: true,
                                       hasHindOnTop: true,
-                                      onChanged: (p0) {},
+                                      maxLines: 1,
+                                      inputFormatters: [
+                                        AppInputFormatters.limitedText(maxLength: 255),
+                                        AppInputFormatters.lettersNumbersSpaceSymbolsFormat,
+                                      ],
                                       validator: AppValidators.name,
                                       hint: AppStrings.itemName,
                                       controller: controller.itemNameController,
@@ -153,7 +157,6 @@ class _ItemViewState extends State<ItemView> {
                                             bgColor: AppColors.white,
                                             isBorderNeeded: true,
                                             hasHindOnTop: true,
-                                            onChanged: (p0) {},
                                             keyboardType:
                                                 TextInputType.numberWithOptions(
                                                   decimal: true,
@@ -332,8 +335,12 @@ class _ItemViewState extends State<ItemView> {
                                       bgColor: AppColors.white,
                                       isBorderNeeded: true,
                                       hasHindOnTop: true,
-                                      onChanged: (p0) {},
                                       hint: AppStrings.addNote,
+                                      maxLines: 1,
+                                      inputFormatters: [
+                                        AppInputFormatters.limitedText(maxLength: 255),
+                                        AppInputFormatters.lettersNumbersSpaceSymbolsFormat,
+                                      ],
                                       controller: controller.notesController,
                                     ),
                                     SizedBox(height: 20),

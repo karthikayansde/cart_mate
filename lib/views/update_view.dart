@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 
 import '../controllers/update_controller.dart';
 import '../services/shared_pref_manager.dart';
+import '../utils/app_input_formatters.dart';
 
 
 class UpdateView extends StatefulWidget {
@@ -77,7 +78,11 @@ class _UpdateViewState extends State<UpdateView> {
                                 bgColor: AppColors.white,
                                 isBorderNeeded: true,
                                 hasHindOnTop: true,
-                                onChanged: (p0) {},
+                                maxLines: 1,
+                                inputFormatters: [
+                                  AppInputFormatters.limitedText(maxLength: 255),
+                                  AppInputFormatters.lettersNumbersSpaceSymbolsFormat
+                                ],
                                 validator: AppValidators.name,
                                 hint: AppStrings.name,
                                 controller: controller.nameController,
@@ -88,9 +93,8 @@ class _UpdateViewState extends State<UpdateView> {
                                 bgColor: AppColors.white,
                                 isBorderNeeded: true,
                                 hasHindOnTop: true,
-                                onChanged: (p0) {},
                                 hint: AppStrings.email,
-                                controller: controller.mailController,                          ),
+                                controller: controller.mailController,),
 
                               SizedBox(height: 20,),
 

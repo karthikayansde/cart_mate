@@ -10,6 +10,7 @@ import 'package:cart_mate/widgets/snack_bar_widget.dart';
 import 'package:cart_mate/widgets/text_field_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../utils/app_input_formatters.dart';
 import '../widgets/glassmorphic_card_widget.dart';
 
 class NewPasswordView extends StatefulWidget {
@@ -35,15 +36,27 @@ class _NewPasswordViewState extends State<NewPasswordView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: widget.fromForgotPassword?null: AppBar(
-        automaticallyImplyLeading: false,
-        actions: [
-        IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back, size: 30),
-        ),],),
+      appBar: widget.fromForgotPassword?null:
+      AppBar(
+      backgroundColor: AppColors.white,
+      leadingWidth: 40,
+      automaticallyImplyLeading: false,
+      title: const Text(
+        AppStrings.appName,
+        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+      ),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 9.0),
+          child: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_back, size: 30, color: AppColors.black,),
+          ),
+        ),
+      ],
+    ),
       body: Obx(
         () => Stack(
           children: [
@@ -81,7 +94,7 @@ class _NewPasswordViewState extends State<NewPasswordView> {
                                 isPassword: controller.isPasswordHidden.value,
                                 isBorderNeeded: true,
                                 hasHindOnTop: true,
-                                validator: AppValidators.password,
+                                validator: AppValidators.newPassword,
                                 suffixIcon: InkWell(
                                   onTap: () {
                                     controller.isPasswordHidden.value =
@@ -104,7 +117,10 @@ class _NewPasswordViewState extends State<NewPasswordView> {
                                   ),
                                 ),
                                 maxLines: 1,
-                                onChanged: (p0) {},
+                                inputFormatters: [
+                                  AppInputFormatters.limitedText(maxLength: 16),
+                                  AppInputFormatters.lettersNumbersSymbolsFormat,
+                                ],
                                 controller: controller.passwordController,
                                 hint: AppStrings.newPassword,
                               ),
@@ -137,7 +153,10 @@ class _NewPasswordViewState extends State<NewPasswordView> {
                                   ),
                                 ),
                                 maxLines: 1,
-                                onChanged: (p0) {},
+                                inputFormatters: [
+                                  AppInputFormatters.limitedText(maxLength: 16),
+                                  AppInputFormatters.lettersNumbersSymbolsFormat,
+                                ],
                                 controller:
                                     controller.confirmPasswordController,
                                 hint: AppStrings.confirmPassword,

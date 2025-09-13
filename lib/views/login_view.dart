@@ -86,6 +86,7 @@ class _LoginViewState extends State<LoginView> {
                                       padding: const EdgeInsets.only(left: 10, right: 10),
                                       child: Icon(Icons.mail_outline_outlined, size: 18),
                                     ),
+                                    maxLines: 1,
                                     inputFormatters: AppInputFormatters.email(),
                                     validator: AppValidators.email,
                                     hint: AppStrings.email,
@@ -117,7 +118,6 @@ class _LoginViewState extends State<LoginView> {
                                     inputFormatters: [
                                       AppInputFormatters.limitedText(maxLength: 16),
                                       AppInputFormatters.lettersNumbersSymbolsFormat,
-
                                     ],
                                     validator: AppValidators.password,
                                     hint: AppStrings.password,

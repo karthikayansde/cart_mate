@@ -18,6 +18,7 @@ class AppInputFormatters {
   // combinations
   static final RegExp lettersRegExp = RegExp(r'[a-zA-Z]');
   static final RegExp lettersSpaceRegExp = RegExp(r'[a-zA-Z\s]');
+  static final RegExp capitalAndNumbersRegExp = RegExp(r'[A-Z0-9]');
   static final RegExp lettersAndNumbersRegExp = RegExp(r'[a-zA-Z0-9]');
   static final RegExp lettersNumbersSpaceRegExp = RegExp(r'[a-zA-Z0-9\s]');
   static final RegExp lettersNumbersSymbolsRegExp  = RegExp(r'''[a-zA-Z0-9.,!?;:\-_'"\(\)\[\]\{\}@#\$%&\*\+=<>/\\|~`^]''');
@@ -36,6 +37,7 @@ class AppInputFormatters {
   // combinations
   static final TextInputFormatter lettersFormat= FilteringTextInputFormatter.allow(lettersRegExp);
   static final TextInputFormatter lettersSpaceFormat= FilteringTextInputFormatter.allow(lettersSpaceRegExp);
+  static final TextInputFormatter capitalAndNumbersFormat= FilteringTextInputFormatter.allow(capitalAndNumbersRegExp);
   static final TextInputFormatter lettersAndNumbersFormat= FilteringTextInputFormatter.allow(lettersAndNumbersRegExp);
   static final TextInputFormatter lettersNumbersSpaceFormat= FilteringTextInputFormatter.allow(lettersNumbersSpaceRegExp);
   static final TextInputFormatter lettersNumbersSymbolsFormat= FilteringTextInputFormatter.allow(lettersNumbersSymbolsRegExp);
@@ -86,6 +88,16 @@ class MaxNumericValueFormatter extends TextInputFormatter {
   }
 }
 
+class UpperCaseTextFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    return TextEditingValue(
+      text: newValue.text.toUpperCase(), // Convert to uppercase
+      selection: newValue.selection,
+    );
+  }
+}
 
 // goals
 // block Emoji

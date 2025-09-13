@@ -40,6 +40,14 @@ class AppValidators {
 
   static String? password(String? value) {
     if (value == null || value.isEmpty) {
+      return AppStrings.newPasswordEMTValidator;
+    } else if (value.length < 6) {
+      return AppStrings.passwordValidator;
+    }
+    return null;
+  }
+  static String? newPassword(String? value) {
+    if (value == null || value.isEmpty) {
       return AppStrings.passwordEMTValidator;
     } else if (value.length < 6) {
       return AppStrings.passwordValidator;

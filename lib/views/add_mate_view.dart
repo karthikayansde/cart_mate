@@ -76,8 +76,9 @@ class _AddMateViewState extends State<AddMateView> {
                                 hasHindOnTop: true,
                                 inputFormatters: [
                                   AppInputFormatters.limitedText(maxLength: 6),
+                                  UpperCaseTextFormatter(),
+                                  AppInputFormatters.capitalAndNumbersFormat
                                 ],
-                                onChanged: (p0) {},
                                 validator: AppValidators.mateCode,
                                 hint: AppStrings.matesCode,
                                 controller: controller.codeController,

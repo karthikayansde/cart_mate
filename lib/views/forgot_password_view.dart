@@ -71,12 +71,12 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                             TextFieldWidget(
                               isBorderNeeded: true,
                               hasHindOnTop: true,
+                              maxLines: 1,
                               suffixIcon: Padding(
                                 padding: const EdgeInsets.only(left: 10, right: 10),
                                 child: Icon(Icons.mail_outline_outlined, size: 18),
                               ),
                               inputFormatters: AppInputFormatters.email(),
-                              onChanged: (p0) {},
                               validator: AppValidators.email,
                               hint: AppStrings.email,
                               controller: controller.emailController,
