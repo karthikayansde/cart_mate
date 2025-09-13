@@ -1,4 +1,3 @@
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cart_mate/controllers/login_controller.dart';
 import 'package:cart_mate/utils/app_colors.dart';
 import 'package:cart_mate/utils/app_strings.dart';
@@ -8,7 +7,6 @@ import 'package:cart_mate/views/signup_view.dart';
 import 'package:cart_mate/widgets/background_image_widget.dart';
 import 'package:cart_mate/widgets/button_widgets.dart';
 import 'package:cart_mate/widgets/loading_widget.dart';
-import 'package:cart_mate/widgets/snack_bar_widget.dart';
 import 'package:cart_mate/widgets/text_field_widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

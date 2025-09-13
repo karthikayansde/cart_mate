@@ -1,12 +1,9 @@
 import 'dart:convert';
 
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cart_mate/models/image_model.dart';
 import 'package:cart_mate/services/api/api_service.dart';
 import 'package:cart_mate/services/api/endpoints.dart';
 import 'package:cart_mate/services/network_service.dart';
-import 'package:cart_mate/views/home_view.dart';
-import 'package:cart_mate/widgets/loading_widget.dart';
 import 'package:cart_mate/widgets/snack_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -176,18 +173,18 @@ class ItemController extends GetxController {
         throw Exception('Failed to decode image.');
       }
 
-      int? heigth = null, width = null;
+      int? height, width;
       if(image.height > image.width){
-        heigth = 100;
+        height = 100;
         width = null;
       }else{
-        heigth = null;
+        height = null;
         width = 100;
       }
 
       // Step 2: Resize the image to 100x100 pixels.
       // The image package handles this in memory.
-      final resizedImage = img.copyResize(image, height: heigth, width: width);
+      final resizedImage = img.copyResize(image, height: height, width: width);
 
       // Step 3: Convert the resized image to a Base64 string.
       // First, encode the image back into a byte format (e.g., PNG).

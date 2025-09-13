@@ -1,4 +1,3 @@
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cart_mate/services/api/api_service.dart';
 import 'package:cart_mate/services/api/endpoints.dart';
 import 'package:cart_mate/services/network_service.dart';
@@ -9,8 +8,8 @@ import 'package:cart_mate/widgets/snack_bar_widget.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../services/shared_pref_manager.dart';
-import '../utils/app_strings.dart';
 
 class SignupController extends GetxController {
   // data members

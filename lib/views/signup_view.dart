@@ -1,20 +1,18 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cart_mate/controllers/signup_controller.dart';
 import 'package:cart_mate/services/url_opener.dart';
+import 'package:cart_mate/utils/app_colors.dart';
 import 'package:cart_mate/utils/app_input_formatters.dart';
+import 'package:cart_mate/utils/app_strings.dart';
 import 'package:cart_mate/utils/app_validators.dart';
 import 'package:cart_mate/widgets/background_image_widget.dart';
+import 'package:cart_mate/widgets/button_widgets.dart';
 import 'package:cart_mate/widgets/loading_widget.dart';
 import 'package:cart_mate/widgets/snack_bar_widget.dart';
-import 'package:flutter/gestures.dart';
-import 'package:get/get.dart';
-import 'package:cart_mate/utils/app_colors.dart';
-import 'package:cart_mate/utils/app_strings.dart';
-import 'package:cart_mate/widgets/button_widgets.dart';
 import 'package:cart_mate/widgets/text_field_widgets.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
-import '../utils/app_images.dart';
+import 'package:get/get.dart';
 import '../widgets/glassmorphic_card_widget.dart';
 
 class SignupView extends StatefulWidget {

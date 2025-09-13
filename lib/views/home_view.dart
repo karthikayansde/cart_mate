@@ -4,7 +4,6 @@ import 'package:cart_mate/services/shared_pref_manager.dart';
 import 'package:cart_mate/utils/app_colors.dart';
 import 'package:cart_mate/utils/app_strings.dart';
 import 'package:cart_mate/views/item_view.dart';
-import 'package:cart_mate/views/menu_list_view.dart';
 import 'package:cart_mate/views/side_drawer_view.dart';
 import 'package:cart_mate/widgets/button_widgets.dart';
 import 'package:cart_mate/widgets/loading_widget.dart';
@@ -12,7 +11,6 @@ import 'package:cart_mate/widgets/snack_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 import '../controllers/mates_controller.dart';
 import '../models/items_model.dart';
 import '../services/responsive.dart';

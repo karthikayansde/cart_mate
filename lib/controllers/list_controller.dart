@@ -1,16 +1,12 @@
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cart_mate/services/api/api_service.dart';
 import 'package:cart_mate/services/api/endpoints.dart';
 import 'package:cart_mate/services/network_service.dart';
-import 'package:cart_mate/views/home_view.dart';
 import 'package:cart_mate/views/menu_list_item_view.dart';
-import 'package:cart_mate/widgets/loading_widget.dart';
 import 'package:cart_mate/widgets/snack_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../services/shared_pref_manager.dart';
-import '../utils/app_strings.dart';
 
 class ListController extends GetxController {
   // data members

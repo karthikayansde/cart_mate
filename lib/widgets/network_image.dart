@@ -74,7 +74,7 @@ class Base64ImageCommon extends StatelessWidget {
         );
       } catch (e) {
         // Handle any decoding errors by falling back to the default image
-        print('Error decoding base64 image: $e');
+        debugPrint('Error decoding base64 image: $e');
       }
     }
 

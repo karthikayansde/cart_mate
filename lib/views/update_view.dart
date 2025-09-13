@@ -1,10 +1,7 @@
-import 'package:cart_mate/controllers/add_mate_controller.dart';
-import 'package:cart_mate/controllers/list_controller.dart';
 import 'package:cart_mate/utils/app_colors.dart';
 import 'package:cart_mate/utils/app_strings.dart';
 import 'package:cart_mate/utils/app_validators.dart';
 import 'package:cart_mate/widgets/button_widgets.dart';
-import 'package:cart_mate/widgets/dropdown_widget.dart';
 import 'package:cart_mate/widgets/loading_widget.dart';
 import 'package:cart_mate/widgets/text_field_widgets.dart';
 import 'package:flutter/material.dart';

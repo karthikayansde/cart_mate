@@ -1,11 +1,6 @@
-import 'package:cart_mate/controllers/home_controller.dart';
 import 'package:cart_mate/utils/app_colors.dart';
 import 'package:cart_mate/utils/app_strings.dart';
-import 'package:cart_mate/views/add_mate_view.dart';
 import 'package:cart_mate/views/item_view.dart';
-import 'package:cart_mate/views/menu_list_view.dart';
-import 'package:cart_mate/views/side_drawer_view.dart';
-import 'package:cart_mate/views/your_code_view.dart';
 import 'package:cart_mate/widgets/button_widgets.dart';
 import 'package:cart_mate/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +11,6 @@ import '../controllers/menu_list_item_controller.dart';
 import '../models/items_model.dart';
 import '../services/responsive.dart';
 import '../utils/app_routes.dart';
-import '../widgets/animated_toggle.dart';
-import '../widgets/dropdown_widget.dart';
-import '../widgets/menu_card.dart';
 
 class MenuListItemView extends StatefulWidget {
   const MenuListItemView({super.key});

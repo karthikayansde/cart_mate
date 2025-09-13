@@ -7,8 +7,6 @@ import 'package:cart_mate/widgets/snack_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../services/shared_pref_manager.dart';
-
 class HomeController extends GetxController {
   // data members
   var isLoading = false.obs;
@@ -49,7 +47,6 @@ class HomeController extends GetxController {
         isLoading.value = false;
       }
     } catch (e) {
-      print(e);
     }
   }
 

@@ -3,7 +3,7 @@
 A new Flutter project.
 
 ## Getting Started
-
+keytool -genkey -v -keystore D:\Karthi_Kayan_R\flutter projects\cart_mate\android\app/upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:

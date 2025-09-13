@@ -13,7 +13,6 @@ import 'package:cart_mate/widgets/text_field_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/mates_controller.dart';
-import '../services/shared_pref_manager.dart';
 import '../utils/app_input_formatters.dart';
 import '../widgets/network_image.dart';
 

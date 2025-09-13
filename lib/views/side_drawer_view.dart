@@ -6,13 +6,11 @@ import 'package:cart_mate/views/update_view.dart';
 import 'package:cart_mate/widgets/alert_boxes.dart';
 import 'package:cart_mate/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
-
 import '../services/api/endpoints.dart';
 import '../services/network_service.dart';
 import '../services/shared_pref_manager.dart';
 import '../utils/app_routes.dart';
 import '../widgets/snack_bar_widget.dart';
-import 'forgot_password_view.dart';
 import 'new_password_view.dart';
 
 class SideDrawerView extends StatelessWidget {

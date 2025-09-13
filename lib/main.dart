@@ -1,5 +1,3 @@
-
-import 'package:cart_mate/services/api/api_service.dart';
 import 'package:cart_mate/services/local_notification_service.dart';
 import 'package:cart_mate/services/shared_pref_manager.dart';
 import 'package:cart_mate/utils/app_colors.dart';
@@ -7,12 +5,13 @@ import 'package:cart_mate/utils/app_strings.dart';
 import 'package:cart_mate/views/home_view.dart';
 import 'package:cart_mate/views/login_view.dart';
 import 'package:cart_mate/views/onboarding_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
@@ -29,7 +28,7 @@ Future<void> main() async {
     NotificationService().initFCM();
 
     String? token = await FirebaseMessaging.instance.getToken();
-    print("kkkis:$token kkkis");
+    debugPrint("kkkis:$token kkkis");
     await LocalNotificationService().init();
   }
 
@@ -75,15 +74,15 @@ class NotificationService {
 
     // Listen for foreground messages
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Received message while in foreground: ${message.notification}');
+      debugPrint('Received message while in foreground: ${message.notification}');
       if (message.notification != null) {
         LocalNotificationService().showNotification(id: 0, title: message.notification!.title??'', body: message.notification!.body??'');
-        print("${message.notification!.title},=== ${message.notification!.body}");
+        debugPrint("${message.notification!.title},=== ${message.notification!.body}");
       }
     });
     // Handle background and terminated notifications
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print("${message.notification!.title},=== ${message.notification!.body}");
+      debugPrint("${message.notification!.title},=== ${message.notification!.body}");
     });
   }
 }

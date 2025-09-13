@@ -1,17 +1,14 @@
 import 'package:cart_mate/controllers/add_mate_controller.dart';
-import 'package:cart_mate/controllers/list_controller.dart';
 import 'package:cart_mate/controllers/mates_controller.dart';
 import 'package:cart_mate/utils/app_colors.dart';
 import 'package:cart_mate/utils/app_input_formatters.dart';
 import 'package:cart_mate/utils/app_strings.dart';
 import 'package:cart_mate/utils/app_validators.dart';
 import 'package:cart_mate/widgets/button_widgets.dart';
-import 'package:cart_mate/widgets/dropdown_widget.dart';
 import 'package:cart_mate/widgets/loading_widget.dart';
 import 'package:cart_mate/widgets/text_field_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 
 class AddMateView extends StatefulWidget {
   const AddMateView({super.key});
@@ -32,6 +29,7 @@ class _AddMateViewState extends State<AddMateView> {
     matesController = Get.put(MatesController());
     controller.codeController.text = '';
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,11 +40,10 @@ class _AddMateViewState extends State<AddMateView> {
             borderRadius: BorderRadius.circular(20),
           ),
           backgroundColor: Colors.white,
-          child:
-          SizedBox(
+          child: SizedBox(
             height: 240,
             child: Obx(
-                  ()=> Stack(
+              () => Stack(
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20),
@@ -63,7 +60,13 @@ class _AddMateViewState extends State<AddMateView> {
                       mainAxisAlignment: MainAxisAlignment.center,
 
                       children: [
-                        Text(AppStrings.addMate, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
+                        Text(
+                          AppStrings.addMate,
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         Form(
                           key: controller.formKey,
                           child: Column(
@@ -77,17 +80,18 @@ class _AddMateViewState extends State<AddMateView> {
                                 inputFormatters: [
                                   AppInputFormatters.limitedText(maxLength: 6),
                                   UpperCaseTextFormatter(),
-                                  AppInputFormatters.capitalAndNumbersFormat
+                                  AppInputFormatters.capitalAndNumbersFormat,
                                 ],
                                 validator: AppValidators.mateCode,
                                 hint: AppStrings.matesCode,
                                 controller: controller.codeController,
                               ),
 
-                              SizedBox(height: 20,),
+                              SizedBox(height: 20),
 
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   BasicButtonWidget(
                                     width: 120,
@@ -99,15 +103,18 @@ class _AddMateViewState extends State<AddMateView> {
                                     labelColor: AppColors.black,
                                     label: AppStrings.cancel,
                                   ),
-                                  SizedBox(height: 10,),
+                                  SizedBox(height: 10),
                                   BasicButtonWidget(
                                     width: 120,
                                     elevation: true,
                                     color: AppColors.menuBg,
                                     onPressed: () async {
-                                      if(controller.formKey.currentState!.validate()){
+                                      if (controller.formKey.currentState!
+                                          .validate()) {
                                         await controller.addMateApi(context);
-                                        await matesController.getMateApi(context);
+                                        await matesController.getMateApi(
+                                          context,
+                                        );
                                       }
                                     },
                                     labelColor: AppColors.black,
@@ -115,8 +122,7 @@ class _AddMateViewState extends State<AddMateView> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 10,)
-
+                              SizedBox(height: 10),
                             ],
                           ),
                         ),
@@ -126,8 +132,8 @@ class _AddMateViewState extends State<AddMateView> {
                   if (controller.isLoading.value)
                     Positioned.fill(
                       child: Container(
-                          color: AppColors.popupBG,
-                          child: LoadingWidget.loader()
+                        color: AppColors.popupBG,
+                        child: LoadingWidget.loader(),
                       ),
                     ),
                 ],

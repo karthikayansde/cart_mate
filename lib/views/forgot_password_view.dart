@@ -8,9 +8,7 @@ import 'package:cart_mate/widgets/button_widgets.dart';
 import 'package:cart_mate/widgets/loading_widget.dart';
 import 'package:cart_mate/widgets/text_field_widgets.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-import '../utils/app_images.dart';
 import '../widgets/glassmorphic_card_widget.dart';
 
 class ForgotPasswordView extends StatefulWidget {
@@ -21,7 +19,6 @@ class ForgotPasswordView extends StatefulWidget {
 }
 
 class _ForgotPasswordViewState extends State<ForgotPasswordView> {
-
   late final ForgotPasswordController controller;
 
   @override
@@ -36,7 +33,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(
-        ()=> Stack(
+        () => Stack(
           children: [
             BackgroundImageWidget(
               child: Center(
@@ -53,15 +50,15 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              AppStrings.forgotPasswordTitle, // "Forgot Password?"
+                              AppStrings.forgotPasswordTitle,
+                              // "Forgot Password?"
                               style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
                             Text(
-                              AppStrings
-                                  .forgotPasswordSubtitle,
+                              AppStrings.forgotPasswordSubtitle,
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,
@@ -73,8 +70,14 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                               hasHindOnTop: true,
                               maxLines: 1,
                               suffixIcon: Padding(
-                                padding: const EdgeInsets.only(left: 10, right: 10),
-                                child: Icon(Icons.mail_outline_outlined, size: 18),
+                                padding: const EdgeInsets.only(
+                                  left: 10,
+                                  right: 10,
+                                ),
+                                child: Icon(
+                                  Icons.mail_outline_outlined,
+                                  size: 18,
+                                ),
                               ),
                               inputFormatters: AppInputFormatters.email(),
                               validator: AppValidators.email,
@@ -84,7 +87,8 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                             const SizedBox(height: 30),
                             BasicButtonWidget(
                               onPressed: () {
-                                if (controller.formKey.currentState!.validate()) {
+                                if (controller.formKey.currentState!
+                                    .validate()) {
                                   FocusScope.of(context).unfocus();
                                   controller.forgotPasswordApi(context);
                                 }
@@ -121,8 +125,8 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
             if (controller.isLoading.value)
               Positioned.fill(
                 child: Container(
-                    color: AppColors.popupBG,
-                    child: LoadingWidget.loader()
+                  color: AppColors.popupBG,
+                  child: LoadingWidget.loader(),
                 ),
               ),
           ],

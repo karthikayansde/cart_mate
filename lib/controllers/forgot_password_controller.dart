@@ -2,7 +2,6 @@ import 'package:cart_mate/services/api/api_service.dart';
 import 'package:cart_mate/services/api/endpoints.dart';
 import 'package:cart_mate/services/network_service.dart';
 import 'package:cart_mate/utils/app_routes.dart';
-import 'package:cart_mate/views/home_view.dart';
 import 'package:cart_mate/views/new_password_view.dart';
 import 'package:cart_mate/views/otp_verification_view.dart';
 import 'package:cart_mate/widgets/snack_bar_widget.dart';
